@@ -1,0 +1,31 @@
+plugin.tx_sjroffers {
+	settings {
+		fieldsToSearch = title,teaser,description
+	}
+	persistence {
+		storagePid = {$plugin.tx_sjroffers.persistence.storagePid}
+	}
+	view {
+		templateRootPath = {$plugin.tx_sjroffers.view.templateRootPath}
+		partialRootPath = {$plugin.tx_sjroffers.view.partialRootPath}
+		layoutRootPath = {$plugin.tx_sjroffers.view.layoutRootPath}
+	}
+}
+
+plugin.tx_sjroffers._CSS_DEFAULT_STYLE (
+	form.tx-sjroffers-form label {
+		font-weight: bold;
+		display: block;
+		vertical-align: top;
+		padding: 1em 0 0 0 !important;
+	}
+	td.tx-sjroffers-column0 {
+		font-weight: bold;
+		padding: 0 2em 0 0 !important;
+	}
+	table.tx-sjroffers-table ul {
+		padding: 0 !important;
+		margin: 0 !important;
+		list-style-type: none;
+	}
+)
