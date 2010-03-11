@@ -1,6 +1,9 @@
 {namespace sjr=Tx_SjrOffers_ViewHelper}
 <f:layout name="default" />
 <f:section name="content">
+
+	<h2><f:link.action action="show" controller="Organization" arguments="{organization : offer.organization}">{offer.organization.name}</f:link.action></h2>
+	
 	<h3>
 		{offer.title}
 		<sjr:security.ifAccessGranted person="{organization.administrator}">
@@ -8,30 +11,35 @@
 			<f:link.action controller="Organization" action="removeOffer" arguments="{offer : offer}" additionalAttributes="{onclick : 'return confirm(\'Alle Daten des Angebots werden gelöscht\nSind Sie sicher?\')'}"><f:image src="EXT:sjr_offers/Resources/Public/Icons/recycler.gif" alt="delete" /></f:link.action>	
 		</sjr:security.ifAccessGranted>
 	</h3>
-	
-	<p><strong>{offer.organization.name}</strong></p>
-	<p><f:link.action action="show" controller="Organization" arguments="{organization : offer.organization}">zum Anbieter</f:link.action>
-		<br /><f:link.action action="index" controller="Offer">zur Liste aller Angebote</f:link.action></p>
-		
+			
 	<p><f:format.nl2br>{offer.description}</f:format.nl2br></p>
 	
-	<table class="tx-sjroffers-table" border="0">
+	<h4>Alle Infos auf einen Blick</h4>
+	
+	<table class="tx-sjroffers-table contenttable" border="0">
+		<f:if condition="{offer.dates}">
 		<tr>
 			<td valign="top" class="tx-sjroffers-column0">Termin</td>
 			<td valign="top">
 				<f:format.nl2br>{offer.dates}</f:format.nl2br>
 			</td>
 		</tr>
+		</f:if>
+		<f:if condition="{offer.venue}">
 		<tr>
 			<td valign="top" class="tx-sjroffers-column0">Veranstaltungsort</td>
 			<td valign="top">
 				<f:format.nl2br>{offer.venue}</f:format.nl2br>
 			</td>
 		</tr>
+		</f:if>
+		<f:if condition="{offer.ageRange}">
 		<tr>
 			<td valign="top" class="tx-sjroffers-column0">Alter</td>
 			<td valign="top"><sjr:format.range>{offer.ageRange}</sjr:format.range></td>
 		</tr>
+		</f:if>
+		<f:if condition="{offer.attendanceFees}">
 		<tr>
 			<td valign="top" class="tx-sjroffers-column0">Unkostenbeitrag</td>
 			<td valign="top">
@@ -43,18 +51,24 @@
 				</f:for>
 			</td>
 		</tr>
+		</f:if>
+		<f:if condition="{offer.services}">
 		<tr>
 			<td valign="top" class="tx-sjroffers-column0">Leistungen</td>
 			<td valign="top">
 				<sjr:format.nl2li>{offer.services}</sjr:format.nl2li>
 			</td>
 		</tr>
+		</f:if>
+		<f:if condition="{offer.attendanceRange}">
 		<tr>
 			<td valign="top" class="tx-sjroffers-column0">Teilnehmerzahl</td>
 			<td valign="top">
 				<sjr:format.range>{offer.attendanceRange}</sjr:format.range>
 			</td>
 		</tr>
+		</f:if>
+		<f:if condition="{offer.categories}">
 		<tr>
 			<td valign="top" class="tx-sjroffers-column0">Kategorien</td>
 			<td valign="top">
@@ -67,12 +81,7 @@
 				</ul>
 			</td>
 		</tr>
-		<tr>
-			<td valign="top" class="tx-sjroffers-column0">Stadtteile</td>
-			<td valign="top">
-				<f:for each="{offer.regions}" as="region">{region.name}, </f:for>
-			</td>
-		</tr>		
+		</f:if>
 		<tr>
 			<td valign="top" class="tx-sjroffers-column0">Ansprechpartner</td>
 			<td valign="top">
@@ -141,7 +150,7 @@
 				</f:if>
 
 			</td>
-		</tr>		
+		</tr>
 	</table>
 
 </f:section>

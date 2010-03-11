@@ -1,12 +1,11 @@
 {namespace sjr=Tx_SjrOffers_ViewHelper}
 <f:layout name="default" />
 <f:section name="content">
-	<h3>{organization.name}
+	<h2>{organization.name}
 		<sjr:security.ifAccessGranted person="{organization.administrator}">
 			&nbsp;<f:link.action action="edit" arguments="{organization : organization}"><f:image src="EXT:sjr_offers/Resources/Public/Icons/edit.gif" alt="edit" /></f:link.action>
 		</sjr:security.ifAccessGranted>
-	</h3>
-	<p><f:link.action action="index" controller="Offer">zur Liste aller Angebote</f:link.action></p>
+	</h2>
 	
 	<p>
 		<f:if condition="{organization.address}"><f:format.nl2br>{organization.address}</f:format.nl2br></f:if>
@@ -18,7 +17,7 @@
 	<p><f:format.nl2br>{organization.description}</f:format.nl2br></p>
 
 	<f:if condition="{contacts}">
-		<h4>Ansprechpartner</h4>
+		<h3>Ansprechpartner</h3>
 		<ul>
 		<f:for each="{contacts}" as="contact">
 			<li>
@@ -78,22 +77,22 @@
 		<p><f:link.action action="new" controller="Offer" arguments="{organization: organization}"><f:image src="EXT:sjr_offers/Resources/Public/Icons/new_record.gif" alt="new" />&nbsp;Neues Angebot</f:link.action></p>
 	</sjr:security.ifAccessGranted>
 
-	<table class="tx-sjroffers-table" border="0" width="100%">
+	<table class="tx-sjroffers-table contenttable" border="0" width="100%">
 		<tr>
-			<td style="border-bottom: 1px #666 solid; padding: 3px;"><strong>Angebotszeitraum</strong></td>
-			<td style="border-bottom: 1px #666 solid; padding: 3px;"><strong>Angebot</strong></td>
-			<td style="border-bottom: 1px #666 solid; padding: 3px;"><strong>Alter</strong></td>
-			<td style="border-bottom: 1px #666 solid; padding: 3px;"><strong>Kategorien</strong></td>
+			<td><strong>Angebotszeitraum</strong></td>
+			<td><strong>Angebot</strong></td>
+			<td><strong>Alter</strong></td>
+			<td><strong>Kategorien</strong></td>
 		</tr>
-		<f:if condition="{organization.offers}">
+		<f:if condition="{organization.availableOffers}">
 			<f:then>
-				<f:for each="{sjr:order(subjects: '{organization.offers}', propertyPath: 'dateRange.minimumValue')}" as="offer">
+				<f:for each="{sjr:order(subjects: '{organization.availableOffers}', propertyPath: 'dateRange.minimumValue')}" as="offer">
 					<tr>
 						<td valign="top" width="30%">
 							<sjr:format.range>{offer.dateRange}</sjr:format.range>
 						</td>
 						<td valign="top" width="70%">
-							<f:link.action action="show" controller="Offer" arguments="{offer : offer}">{offer.title}</f:link.action>
+							<f:link.action action="show" controller="Offer" arguments="{offer : offer}"><strong>{offer.title}</strong></f:link.action>
 							<sjr:security.ifAccessGranted person="{offer.organization.administrator}">
 									<f:link.action controller="Offer" action="edit" arguments="{offer : offer}"><f:image src="EXT:sjr_offers/Resources/Public/Icons/edit.gif" alt="edit" /></f:link.action>
 									<f:link.action controller="Organization" action="removeOffer" arguments="{offer : offer}" additionalAttributes="{onclick : 'return confirm(\'Alle Daten des Angebots werden gelöscht\nSind Sie sicher?\')'}"><f:image src="EXT:sjr_offers/Resources/Public/Icons/recycler.gif" alt="delete" /></f:link.action>
@@ -136,12 +135,6 @@
 				</tr>
 			</f:else>
 		</f:if>
-		<tr>
-			<td style="border-top: 1px #666 solid; padding: 3px;" />
-			<td style="border-top: 1px #666 solid; padding: 3px;" />
-			<td style="border-top: 1px #666 solid; padding: 3px;" />
-			<td style="border-top: 1px #666 solid; padding: 3px;" />
-		</tr>
 	</table>
 	
 	<sjr:security.ifAccessGranted person="{organization.administrator}">

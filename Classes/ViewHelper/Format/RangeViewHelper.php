@@ -55,7 +55,7 @@ class Tx_SjrOffers_ViewHelper_Format_RangeViewHelper extends Tx_Fluid_Core_ViewH
 			$minimumValue = $range->getMinimumValue();
 			$maximumValue = $range->getMaximumValue();	
 			if (empty($minimumValue) && empty($maximumValue)) {
-				$output = 'unbefristet';
+				$output = 'ganzjährig';
 			} elseif (empty($minimumValue) && !empty($maximumValue)) {
 				$output = 'bis ' . $maximumValue->format('d.m.Y');
 			} elseif (!empty($minimumValue) && empty($maximumValue)) {

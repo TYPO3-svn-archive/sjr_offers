@@ -63,7 +63,7 @@ class Tx_SjrOffers_Domain_Model_Person extends Tx_Extbase_DomainObject_AbstractE
 	 **/
 	protected $emailAddress;
 	
-	public function __construct($name) {
+	public function __construct($name = NULL) {
 		$this->setName($name);
 	}
 	

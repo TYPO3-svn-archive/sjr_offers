@@ -41,12 +41,14 @@ class Tx_SjrOffers_Domain_Validator_RangeConstraintValidator extends Tx_Extbase_
 	 */
 	public function isValid($value) {
 		$this->errors = array();
-		$minimumValue = $value->getMinimumValue();
-		$maximumValue = $value->getMaximumValue();
-		if ($maximumValue !== NULL && $minimumValue !== NULL) {
-			if ($minimumValue > $maximumValue) {
-				$this->addError('Das Minimum darf nicht größer sein als das Maximum.', 1265622568);
-				return FALSE;
+		if ($value instanceof Tx_SjrOffers_Domain_Model_RangeConstraint) {
+			$minimumValue = $value->getMinimumValue();
+			$maximumValue = $value->getMaximumValue();
+			if ($maximumValue !== NULL && $minimumValue !== NULL) {
+				if ($minimumValue > $maximumValue) {
+					$this->addError('Das Minimum darf nicht größer sein als das Maximum.', 1265622568);
+					return FALSE;
+				}
 			}
 		}
 		return TRUE;

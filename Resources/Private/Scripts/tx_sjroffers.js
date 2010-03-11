@@ -3,8 +3,8 @@ $(function() {
 		regional: 'de',
 		duration: ''
 	});
-	$("#startdate").datepicker({ defaultDate: '' });
-	$("#enddate").datepicker({ defaultDate: '+1m -1d' });
+	$("#startdate").datepicker({ defaultDate: 'today' });
+	$("#enddate").datepicker({ defaultDate: 'today' });
 	
 	$("#toggleButton").click(function() {
 		$("#toggleForm").toggle('blind');
@@ -30,7 +30,7 @@ $(function() {
 	
 	$('#addAttendanceFee').click(function(event){
 		event.preventDefault();
-		$('#attendanceFeeContainer').append('<div class="singleAttendanceFee"><input size="6" type="text" name="tx_sjroffers_list[attendanceFees][amount][]" value="" />&nbsp;&euro;&nbsp;&nbsp;\nfür&nbsp;<input size="16" type="text" name="tx_sjroffers_list[attendanceFees][comment][]" value="" />\n<button class="removeAttendanceFee">löschen</button><br /></div>');
+		$('#attendanceFeeContainer').append('<div class="singleAttendanceFee"><input size="6" type="text" name="tx_sjroffers_list[attendanceFees][amount][]" value="" />&nbsp;&euro;&nbsp;&nbsp;\ngültig&nbsp;für&nbsp;<input size="16" type="text" name="tx_sjroffers_list[attendanceFees][comment][]" value="" />\n<button class="removeAttendanceFee">löschen</button><br /></div>');
 		$('.removeAttendanceFee').bind('click', function(event){
 		    event.preventDefault();
 		    $(this).parent('div.singleAttendanceFee').remove();

@@ -16,9 +16,9 @@
 			<label index="tx_sjroffers_domain_model_offer.title">Titel</label>
 			<label index="tx_sjroffers_domain_model_offer.teaser">Anreißer (max. 2zeilige Kurzbeschreibung)</label>
 			<label index="tx_sjroffers_domain_model_offer.description">Ausführliche Beschreibung des Angebots</label>
-			<label index="tx_sjroffers_domain_model_offer.description">Leistungen</label>
 			<label index="tx_sjroffers_domain_model_offer.dates">Datum der Veranstaltung (kurze textliche Beschreibung)</label>
 			<label index="tx_sjroffers_domain_model_offer.venue">Veranstaltungsort (kurze textliche Beschreibung)</label>
+			<label index="tx_sjroffers_domain_model_offer.services">Leistungen</label>
 			<label index="tx_sjroffers_domain_model_offer.age_range">Altersbereich</label>
 			<label index="tx_sjroffers_domain_model_offer.date_range">Angebotszeitraum</label>
 			<label index="tx_sjroffers_domain_model_offer.attendance_range">Teilnehmerzahl</label>

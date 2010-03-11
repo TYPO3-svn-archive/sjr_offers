@@ -93,6 +93,7 @@ class Tx_SjrOffers_Domain_Model_Offer extends Tx_Extbase_DomainObject_AbstractEn
 		
 	/**
 	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_SjrOffers_Domain_Model_AttendanceFee> The attendance fees of the offer.
+	 * @lazy
 	 **/
 	protected $attendanceFees;
 		
@@ -103,11 +104,13 @@ class Tx_SjrOffers_Domain_Model_Offer extends Tx_Extbase_DomainObject_AbstractEn
 	
 	/**
 	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_SjrOffers_Domain_Model_Category> The categories the offer is assigned to
+	 * @lazy
 	 **/
 	protected $categories;
 	
 	/**
 	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_SjrOffers_Domain_Model_Region> The regions the offer is available
+	 * @lazy
 	 **/
 	protected $regions;
 	
@@ -127,7 +130,7 @@ class Tx_SjrOffers_Domain_Model_Offer extends Tx_Extbase_DomainObject_AbstractEn
 	 * @param Tx_SjrOffers_Domain_Model_Organization The organization the offer belongs to
 	 * @return void
 	 */
-	public function setOrganization(Tx_SjrOffers_Domain_Model_Organization $organization) {
+	public function setOrganization(Tx_SjrOffers_Domain_Model_Organization $organization = NULL) {
 		$this->organization = $organization;
 	}
 

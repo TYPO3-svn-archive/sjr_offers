@@ -63,11 +63,23 @@ class Tx_SjrOffers_Controller_OfferController extends Tx_Extbase_MVC_Controller_
 	 * @return string The rendered HTML string
 	 */
 	public function indexAction(Tx_SjrOffers_Domain_Model_Demand $demand = NULL) {
+		if (!empty($this->settings['restrictToCategory'])) {
+			$category = $this->categoryRepository->findByUid(intval($this->settings['restrictToCategory']));
+			if ($demand === NULL) {
+				$demand = t3lib_div::makeInstance('Tx_SjrOffers_Domain_Model_Demand');
+			}
+			$demand->setCategory($category);
+		}
 		$this->view->assign('demand', $demand);
 		$this->view->assign('organizations', array_merge(array(0 => 'Alle Organisationen'), $this->organizationRepository->findAll()));
 		$this->view->assign('categories', array_merge(array(0 => 'Alle Kategorien'), $this->categoryRepository->findAllNonInternal()));
 		$this->view->assign('regions', array_merge(array(0 => 'Alle Stadtteile'), $this->regionRepository->findAll()));
-		$this->view->assign('offers', $this->offerRepository->findOffersMeetingTheDemand($demand, $this->settings['fieldsToSearch']));
+		if (!is_null($demand)) {
+			$this->view->assign('demand', $demand);
+			$this->view->assign('offers', $this->offerRepository->findOffersMeetingTheDemand($demand, t3lib_div::trimExplode(',', $this->settings['propertiesToSearch'])));
+		} else {
+			$this->view->assign('offers', $this->offerRepository->findAll());
+		}
 	}
 	
 	/**
@@ -95,7 +107,7 @@ class Tx_SjrOffers_Controller_OfferController extends Tx_Extbase_MVC_Controller_
 	 * @dontverifyrequesthash
 	 */
 	public function newAction(Tx_SjrOffers_Domain_Model_Organization $organization, Tx_SjrOffers_Domain_Model_Offer $newOffer = NULL) {
-		if ($this->accessControllService->hasLoggedInBackendAdmin() || $this->accessControllService->hasAccess($organization()->getAdministrator())) {
+		if ($this->accessControllService->hasLoggedInBackendAdmin() || $this->accessControllService->hasAccess($organization->getAdministrator())) {
 			$this->view->assign('organization', $organization);
 			$this->view->assign('newOffer', $newOffer);
 			$this->view->assign('categories', $this->categoryRepository->findAll());

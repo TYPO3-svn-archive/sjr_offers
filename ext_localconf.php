@@ -9,9 +9,24 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 		'Organization' => 'index,show,edit,update,removeOffer,createContact,updateContact,removeContact', 
 		'Person' => 'new,create,edit,update,delete',
 		),
-	array(	 
+	array(
 		'Offer' => 'index,new,create,edit,update,delete,createContact,setContact,updateContact,removeContact',
 		'Organization' => 'edit,update,removeOffer,createContact,updateContact,removeContact', 
+		'Person' => 'new,create,edit,update,delete',
+		)
+	);
+
+Tx_Extbase_Utility_Extension::configurePlugin(
+	$_EXTKEY,
+	'organizations',
+	array(	 
+		'Organization' => 'index,show,edit,update,removeOffer,createContact,updateContact,removeContact', 
+		'Offer' => 'index,show,new,create,edit,update,delete,createContact,setContact,updateContact,removeContact',
+		'Person' => 'new,create,edit,update,delete',
+		),
+	array(
+		'Organization' => 'edit,update,removeOffer,createContact,updateContact,removeContact', 
+		'Offer' => 'index,new,create,edit,update,delete,createContact,setContact,updateContact,removeContact',
 		'Person' => 'new,create,edit,update,delete',
 		)
 	);

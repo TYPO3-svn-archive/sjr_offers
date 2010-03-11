@@ -2,20 +2,20 @@
 <f:layout name="default" />
 <f:section name="content">
 
-<h3>Alle Angebote der Mitgliedsverbände des SJR e.V.</h3>
-<p><f:link.action action="index" controller="Organization">Alle Mitgliedsverbände anzeigen</f:link.action></p>
+<h2>Angebote der Mitgliedsverbände des SJR e.V.</h2>
+
 <f:render partial="formErrors" arguments="{for: 'demand'}" />
-<table class="tx-sjroffers-table" border="0" width="100%">
+<table class="tx-sjroffers-table contenttable" border="0" width="100%">
 	<tr>
-		<td style="border-bottom: 1px #666 solid; padding: 3px;"><strong>Angebotszeitraum</strong></td>
-		<td style="border-bottom: 1px #666 solid; padding: 3px;"><strong>Angebot</strong></td>
-		<td style="border-bottom: 1px #666 solid; padding: 3px;"><strong>Alter</strong></td>
-		<td style="border-bottom: 1px #666 solid; padding: 3px;"><strong>Kategorien</strong></td>
-		<td style="border-bottom: 1px #666 solid; padding: 3px;"><strong>Anbieter</strong></td>
+		<td><strong>Angebotszeitraum</strong></td>
+		<td><strong>Angebot</strong></td>
+		<td><strong>Alter</strong></td>
+		<td><strong>Kategorien</strong></td>
+		<td><strong>Anbieter</strong></td>
 	</tr>
 	<f:form class="tx-sjroffers-form" method="post" action="index" name="demand" object="{demand}">
 		<tr>
-			<td valign="top" >&nbsp;</td>
+			<td valign="top" ><noscript><f:form.submit value="Jetzt Filtern ->"/></noscript></td>
 			<td valign="top" ><f:form.textbox id="searchWord" property="searchWord" style="width: 90%;" additionalAttributes="{onChange : 'document.demand.submit();'}" /></td>
 			<td valign="top" ><f:form.textbox id="age" property="age" size="4" additionalAttributes="{onChange : 'document.demand.submit();'}" /></td>
 			<td valign="top" >
@@ -25,13 +25,6 @@
 			<td valign="top" ><f:form.select id="organizations" property="organization" options="{organizations}" optionValueField="uid" optionLabelField="name" style="width: 100%;" additionalAttributes="{onChange : 'document.demand.submit();'}"><select><option>###dummy###</option></select></f:form.select></td>
 		</tr>
 	</f:form>
-	<tr>
-		<td style="border-top: 1px #666 solid; padding: 3px;" />
-		<td style="border-top: 1px #666 solid; padding: 3px;" />
-		<td style="border-top: 1px #666 solid; padding: 3px;" />
-		<td style="border-top: 1px #666 solid; padding: 3px;" />
-		<td style="border-top: 1px #666 solid; padding: 3px;" />
-	</tr>
 	<f:if condition="{offers}">
 		<f:then>
 			<f:for each="{sjr:order(subjects: '{offers}', propertyPath: 'dateRange.minimumValue')}" as="offer">
@@ -40,7 +33,7 @@
 						<sjr:format.range>{offer.dateRange}</sjr:format.range>
 					</td>
 					<td valign="top" width="30%">
-						<f:link.action action="show" controller="Offer" arguments="{offer : offer}">{offer.title}</f:link.action>
+						<f:link.action action="show" controller="Offer" arguments="{offer : offer}"><strong>{offer.title}</strong></f:link.action>
 						<f:if condition="{offer.teaser}">
 							<f:then>
 								<br />{offer.teaser}
@@ -83,11 +76,5 @@
 			</tr>
 		</f:else>
 	</f:if>
-	<tr>
-		<td style="border-top: 1px #666 solid; padding: 3px;" />
-		<td style="border-top: 1px #666 solid; padding: 3px;" />
-		<td style="border-top: 1px #666 solid; padding: 3px;" />
-		<td style="border-top: 1px #666 solid; padding: 3px;" />
-		<td style="border-top: 1px #666 solid; padding: 3px;" />
-	</tr>
-</table></f:section>
+</table>
+</f:section>

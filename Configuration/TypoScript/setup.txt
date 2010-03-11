@@ -1,6 +1,7 @@
 plugin.tx_sjroffers {
 	settings {
-		fieldsToSearch = title,teaser,description
+		propertiesToSearch = title,teaser,description
+		restrictToCategory = 
 	}
 	persistence {
 		storagePid = {$plugin.tx_sjroffers.persistence.storagePid}
@@ -17,13 +18,11 @@ plugin.tx_sjroffers._CSS_DEFAULT_STYLE (
 		font-weight: bold;
 		display: block;
 		vertical-align: top;
-		padding: 1em 0 0 0 !important;
 	}
 	td.tx-sjroffers-column0 {
 		font-weight: bold;
-		padding: 0 2em 0 0 !important;
 	}
-	table.tx-sjroffers-table ul {
+	table.tx-sjroffers-table ul li{
 		padding: 0 !important;
 		margin: 0 !important;
 		list-style-type: none;

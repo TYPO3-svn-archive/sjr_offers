@@ -118,7 +118,7 @@ CREATE TABLE tx_sjroffers_domain_model_attendancefee (
 	pid int(11) DEFAULT '0' NOT NULL,
 	
 	offer int(11) DEFAULT '0' NOT NULL,
-	amount decimal(4,2) DEFAULT '0.00' NOT NULL,
+	amount decimal(10,2) DEFAULT '0.00' NOT NULL,
 	comment text NOT NULL,
 	
 	PRIMARY KEY (uid),
@@ -178,7 +178,7 @@ CREATE TABLE tx_sjroffers_organization_person_mm (
 	hidden tinyint(3) unsigned DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (uid),
-	KEY parent (pid)
+	KEY parent (pid,uid_local,uid_foreign)
 );
 
 CREATE TABLE tx_sjroffers_offer_category_mm (
@@ -199,7 +199,7 @@ CREATE TABLE tx_sjroffers_offer_category_mm (
 	l18n_diffsource mediumblob NOT NULL,
 
 	PRIMARY KEY (uid),
-	KEY parent (pid)
+	KEY parent (pid,uid_local,uid_foreign)
 );
 
 CREATE TABLE tx_sjroffers_offer_region_mm (
@@ -220,5 +220,5 @@ CREATE TABLE tx_sjroffers_offer_region_mm (
 	l18n_diffsource mediumblob NOT NULL,
 
 	PRIMARY KEY (uid),
-	KEY parent (pid)
+	KEY parent (pid,uid_local,uid_foreign)
 );

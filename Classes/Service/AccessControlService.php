@@ -34,20 +34,13 @@ class Tx_SjrOffers_Service_AccessControlService {
 		if ($frontendUser instanceof Tx_Extbase_Persistence_LazyLoadingProxy) {
 			$frontendUser->_loadRealInstance();
 		}
-		if ($frontendUser instanceof Tx_Extbase_Domain_Model_FrontendUser && $frontendUser !== NULL && $this->isLoggedIn($frontendUser) === TRUE) {
-			return TRUE;
-		}
-		return FALSE;
-	}	
-
-	public function isLoggedIn($frontendUser = NULL) {
-		if ($frontendUser instanceof Tx_Extbase_Domain_Model_FrontendUser && $frontendUser !== NULL && $this->hasLoggedInFrontendUser() === TRUE) {
+		if (is_object($frontendUser) && $frontendUser instanceof Tx_Extbase_Domain_Model_FrontendUser) {
 			if ($frontendUser->getUid() === $this->getFrontendUserUid()) {
 				return TRUE;
 			}
 		}
 		return FALSE;
-	}
+	}	
 		
 	public function hasLoggedInBackendAdmin() {
 		return $GLOBALS['TSFE']->beUserLogin === 1 ? TRUE : FALSE;
@@ -68,7 +61,6 @@ class Tx_SjrOffers_Service_AccessControlService {
 		if($this->hasLoggedInFrontendUser() && !empty($GLOBALS['TSFE']->fe_user->user['uid'])) {
 			return intval($GLOBALS['TSFE']->fe_user->user['uid']);
 		}
-		throw new Tx_SjrOffers_Service_AccessException('Could not determine frontend user', 123456);
 	}
 	
 	protected function userHasAccessToObject($feUserUid, $object) {

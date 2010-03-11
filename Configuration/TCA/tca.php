@@ -108,7 +108,7 @@ $TCA['tx_sjroffers_domain_model_organization'] = array(
 			'label'   => 'LLL:EXT:sjr_offers/Resources/Private/Language/locallang_db.xml:tx_sjroffers_domain_model_organization.description',
 			'config'  => array(
 				'type' => 'text',
-				'eval' => 'required',
+				'eval' => 'trim',
 				'rows' => 5,
 				'cols' => 40,
 				'max' => '1000'
@@ -172,8 +172,10 @@ $TCA['tx_sjroffers_domain_model_organization'] = array(
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'fe_users',
-
 				'foreign_table_where' => 'AND fe_users.pid=###CURRENT_PID###',
+				'items' => array(
+						array('--none--', 0),
+					),
 				'maxitems' => 1,
 				'wizards' => Array(
 		             '_PADDING' => 1,
@@ -237,6 +239,7 @@ $TCA['tx_sjroffers_domain_model_offer'] = array(
 			'label'   => 'LLL:EXT:sjr_offers/Resources/Private/Language/locallang_db.xml:tx_sjroffers_domain_model_offer.teaser',
 			'config'  => array(
 				'type' => 'text',
+				'eval' => 'trim',
 				'rows' => 2,
 				'cols' => 60,
 			)
@@ -246,6 +249,7 @@ $TCA['tx_sjroffers_domain_model_offer'] = array(
 			'label'   => 'LLL:EXT:sjr_offers/Resources/Private/Language/locallang_db.xml:tx_sjroffers_domain_model_offer.description',
 			'config'  => array(
 				'type' => 'text',
+				'eval' => 'trim',
 				'rows' => 10,
 				'cols' => 60,
 			)
@@ -283,6 +287,7 @@ $TCA['tx_sjroffers_domain_model_offer'] = array(
 			'config' => array(
 				'type' => 'inline',
 				'foreign_table' => 'tx_sjroffers_domain_model_agerange',
+				'eval' => 'required',
 				'maxitems' => 1,
 			)
 		),
@@ -292,6 +297,7 @@ $TCA['tx_sjroffers_domain_model_offer'] = array(
 			'config' => array(
 				'type' => 'inline',
 				'foreign_table' => 'tx_sjroffers_domain_model_daterange',
+				'eval' => 'required',
 				'maxitems' => 1,
 			)
 		),
@@ -301,6 +307,7 @@ $TCA['tx_sjroffers_domain_model_offer'] = array(
 			'config' => array(
 				'type' => 'inline',
 				'foreign_table' => 'tx_sjroffers_domain_model_attendancerange',
+				'eval' => 'required',
 				'maxitems' => 1,
 			)
 		),
@@ -581,7 +588,6 @@ $TCA['tx_sjroffers_domain_model_daterange'] = array(
 				'type'    => 'input',
 				'size' => 8,
 				'checkbox' => '',
-				'default' => strtotime('today'),
 				'eval' => 'date',
 			)
 		),
@@ -592,7 +598,6 @@ $TCA['tx_sjroffers_domain_model_daterange'] = array(
 				'type'    => 'input',
 				'size' => 8,
 				'checkbox' => '',
-				'default' => strtotime('today +1 year'),
 				'eval' => 'date',
 			)
 		),

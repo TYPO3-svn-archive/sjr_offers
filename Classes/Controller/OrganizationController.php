@@ -45,13 +45,14 @@ class Tx_SjrOffers_Controller_OrganizationController extends Tx_Extbase_MVC_Cont
 		$this->organizationRepository = t3lib_div::makeInstance('Tx_SjrOffers_Domain_Repository_OrganizationRepository');
 		$this->personRepository = t3lib_div::makeInstance('Tx_SjrOffers_Domain_Repository_PersonRepository');
 		$this->categoryRepository = t3lib_div::makeInstance('Tx_SjrOffers_Domain_Repository_CategoryRepository');
+		// FIXME inclusion of jQuery not that elegant:
 		$this->additionalHeaderData = '
 <link type="text/css" href="fileadmin/css/smoothness/jquery-ui-1.7.2.custom.css" rel="Stylesheet" />	
 <script type="text/javascript" src="fileadmin/js/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="fileadmin/js/jquery-ui-1.7.2.custom.min.js"></script>
 <script type="text/javascript" src="fileadmin/js/tx_sjroffers.js"></script>
 ';
-		
+
 	}
 
 	/**
@@ -174,7 +175,7 @@ class Tx_SjrOffers_Controller_OrganizationController extends Tx_Extbase_MVC_Cont
 	 * @dontvalidate $offer
 	 */
 	public function removeOfferAction(Tx_SjrOffers_Domain_Model_Offer $offer) {
-		if ($this->accessControllService->hasLoggedInBackendAdmin() || $this->accessControllService->hasAccess($organization->getAdministrator())) {
+		if ($this->accessControllService->hasLoggedInBackendAdmin() || $this->accessControllService->hasAccess($offer->getOrganization()->getAdministrator())) {
 			$organization = $offer->getOrganization();
 			$organization->removeOffer($offer);
 		} else {
