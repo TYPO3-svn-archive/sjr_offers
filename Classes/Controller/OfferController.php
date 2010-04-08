@@ -63,11 +63,15 @@ class Tx_SjrOffers_Controller_OfferController extends Tx_Extbase_MVC_Controller_
 	 * @return string The rendered HTML string
 	 */
 	public function indexAction(Tx_SjrOffers_Domain_Model_Demand $demand = NULL) {
+		if (is_string($this->settings['defaultAction']) && strlen($this->settings['defaultAction']) >0) {
+			$this->forward($this->settings['defaultAction'], 'Organization');
+		}
 		$allowedStates = (is_string($this->settings['allowedStates']) && strlen($this->settings['allowedStates']) > 0) ? t3lib_div::intExplode(',', $this->settings['allowedStates']) : array();
 		$listCategories = (is_string($this->settings['listCategories']) && strlen($this->settings['listCategories']) > 0) ? t3lib_div::intExplode(',', $this->settings['listCategories']) : array();
+		$selectableCategories = (is_string($this->settings['selectableCategories']) && strlen($this->settings['selectableCategories']) > 0) ? t3lib_div::intExplode(',', $this->settings['selectableCategories']) : array();
 		$this->view->assign('demand', $demand);
 		$this->view->assign('organizations', array_merge(array(0 => 'Alle Organisationen'), $this->organizationRepository->findByStates($allowedStates)));
-		$this->view->assign('categories', array_merge(array(0 => 'Alle Kategorien'), $this->categoryRepository->findAllNonInternal()));
+		$this->view->assign('categories', array_merge(array(0 => 'Alle Kategorien'), $this->categoryRepository->findSelectableCategories($selectableCategories)));
 		$this->view->assign('regions', array_merge(array(0 => 'Alle Stadtteile'), $this->regionRepository->findAll()));
 		$this->view->assign('offers', $this->offerRepository->findDemanded(
 			$demand,
@@ -77,7 +81,7 @@ class Tx_SjrOffers_Controller_OfferController extends Tx_Extbase_MVC_Controller_
 			));
 			
 	}
-	
+		
 	/**
 	 * Renders a single offer
 	 *
@@ -106,7 +110,6 @@ class Tx_SjrOffers_Controller_OfferController extends Tx_Extbase_MVC_Controller_
 		if ($this->accessControllService->hasLoggedInBackendAdmin() || $this->accessControllService->hasAccess($organization->getAdministrator())) {
 			$this->view->assign('organization', $organization);
 			$this->view->assign('newOffer', $newOffer);
-			$frontendUserGroups = $this->accessControllService->getFrontendUserGroups();
 			$this->view->assign('regions', $this->regionRepository->findAll());
 			$this->view->assign('contacts', $organization->getAllContacts());
 			$this->response->addAdditionalHeaderData($this->additionalHeaderData);
@@ -120,7 +123,7 @@ class Tx_SjrOffers_Controller_OfferController extends Tx_Extbase_MVC_Controller_
 	 *
 	 * @param Tx_SjrOffers_Domain_Model_Organization $organization The organization the offer belongs to
 	 * @param Tx_SjrOffers_Domain_Model_Offer $newOffer A fresh Offer object which has not yet been added to the repository
-	 * @param array $attendanceFees An array of attendence fees. array(amount => '12.50', comment => 'Children')
+	 * @param array $attendanceFees An array of attendance fees. array(amount => '12.50', comment => 'Children')
 	 * @return void
 	 * @dontverifyrequesthash
 	 */
@@ -262,7 +265,7 @@ class Tx_SjrOffers_Controller_OfferController extends Tx_Extbase_MVC_Controller_
 	 */
 	protected function createAndAddAttendanceFees( Tx_SjrOffers_Domain_Model_Offer $offer, array $attendanceFees = array()) {
 		foreach ($attendanceFees['amount'] as $key => $amount) {
-			if ($amount !== '') {
+			if (!empty($amount)) {
 				$offer->addAttendanceFee(new Tx_SjrOffers_Domain_Model_AttendanceFee($amount, $attendanceFees['comment'][$key]));
 			}
 		}

@@ -2,8 +2,6 @@
 <f:layout name="default" />
 <f:section name="content">
 
-<h2>Angebote der Mitgliedsverbände des SJR e.V.</h2>
-
 <f:render partial="formErrors" arguments="{for: 'demand'}" />
 <table class="tx-sjroffers-table contenttable" border="0" width="100%">
 	<tr>
@@ -20,9 +18,9 @@
 			<td valign="top" ><f:form.textbox id="age" property="age" size="4" additionalAttributes="{onChange : 'document.demand.submit();'}" /></td>
 			<td valign="top" >
 				<f:form.select id="categories" property="category" options="{categories}" optionValueField="uid" style="width: 90%;" additionalAttributes="{onChange : 'document.demand.submit();'}"><select><option>###dummy###</option></select></f:form.select><br />
-				<f:form.select id="regions" property="region" options="{regions}" optionValueField="uid" style="width: 90%;" additionalAttributes="{onChange : 'document.demand.submit();'}"><select><option>###dummy###</option></select></f:form.select>
+				<f:form.select id="regions" property="region" options="{regions}" style="width: 90%;" additionalAttributes="{onChange : 'document.demand.submit();'}"><select><option>###dummy###</option></select></f:form.select>
 			</td>
-			<td valign="top" ><f:form.select id="organizations" property="organization" options="{organizations}" optionValueField="uid" optionLabelField="name" style="width: 100%;" additionalAttributes="{onChange : 'document.demand.submit();'}"><select><option>###dummy###</option></select></f:form.select></td>
+			<td valign="top" ><f:form.select id="organizations" property="organization" options="{organizations}" optionLabelField="name" style="width: 100%;" additionalAttributes="{onChange : 'document.demand.submit();'}"><select><option>###dummy###</option></select></f:form.select></td>
 		</tr>
 	</f:form>
 	<f:if condition="{offers}">

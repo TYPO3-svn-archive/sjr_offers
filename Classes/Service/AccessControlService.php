@@ -28,13 +28,13 @@
  * @version $Id:$
  * @license http://opensource.org/licenses/gpl-license.php GNU protected License, version 2
  */
-class Tx_SjrOffers_Service_AccessControlService {
+class Tx_SjrOffers_Service_AccessControlService implements t3lib_Singleton {
 
 	public function hasAccess($frontendUser = NULL) {
 		if ($frontendUser instanceof Tx_Extbase_Persistence_LazyLoadingProxy) {
 			$frontendUser->_loadRealInstance();
 		}
-		if (is_object($frontendUser) && $frontendUser instanceof Tx_Extbase_Domain_Model_FrontendUser) {
+		if (is_object($frontendUser)) {
 			if ($frontendUser->getUid() === $this->getFrontendUserUid()) {
 				return TRUE;
 			}

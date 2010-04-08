@@ -32,22 +32,17 @@ class Tx_SjrOffers_Domain_Repository_CategoryRepository extends Tx_Extbase_Persi
 	 *
 	 * @return array Matched categories
 	 */
-	public function findAllNonInternal() {
+	public function findSelectableCategories(array $selectableCategories = array()) {
 		$query = $this->createQuery();
-		$query->matching($query->equals('isInternal', FALSE));
-		return $query->execute();		
+		$constraints = array();
+		$constraints[] = $query->equals('isInternal', FALSE);
+		if (count($selectableCategories) > 0) {
+			$constraints[] = $query->in('uid', $selectableCategories);
+		}
+		$query->matching($query->logicalAnd($constraints));
+		$query->setOrderings(array('title' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING));
+		return $query->execute();
 	}
-	
-	/**
-	 * Finds all categories that are allowed to be shown
-	 *
-	 * @return mixed Allowed categories (an array of uids or an array of Categgory objects)
-	 */
-	public function findAllowed($allowedCategories) {
-		$query = $this->createQuery();
-		$query->matching($query->in('uid', $allowedCategories));
-		return $query->execute();		
-	}
-	
+		
 }
 ?>

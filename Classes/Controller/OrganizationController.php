@@ -78,10 +78,17 @@ class Tx_SjrOffers_Controller_OrganizationController extends Tx_Extbase_MVC_Cont
 			$contacts = $organization->getAllContacts();
 			$this->view->assign('offers', $this->offerRepository->findForAdmin($organization));
 		} else {
+			$allowedStates = (is_string($this->settings['allowedStates']) && strlen($this->settings['allowedStates']) > 0) ? t3lib_div::intExplode(',', $this->settings['allowedStates']) : array();
+			$listCategories = (is_string($this->settings['listCategories']) && strlen($this->settings['listCategories']) > 0) ? t3lib_div::intExplode(',', $this->settings['listCategories']) : array();
 			$contacts = $organization->getContacts();
 			$demand = t3lib_div::makeInstance('Tx_SjrOffers_Domain_Model_Demand');
 			$demand->setOrganization($organization);
-			$this->view->assign('offers', $this->offerRepository->findDemanded($demand));
+			$this->view->assign('offers', $this->offerRepository->findDemanded(
+				$demand,
+				array(),
+				$listCategories,
+				$allowedStates
+				));
 		}
 		$this->view->assign('contacts', $contacts);
 		$this->view->assign('organization', $organization);

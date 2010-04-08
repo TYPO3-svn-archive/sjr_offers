@@ -119,7 +119,7 @@ CREATE TABLE tx_sjroffers_domain_model_attendancefee (
 	pid int(11) DEFAULT '0' NOT NULL,
 	
 	offer int(11) DEFAULT '0' NOT NULL,
-	amount decimal(10,2) DEFAULT '0.00' NOT NULL,
+	amount decimal(19,2) DEFAULT '0.00' NOT NULL,
 	comment text NOT NULL,
 	
 	PRIMARY KEY (uid),

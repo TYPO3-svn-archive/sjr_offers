@@ -4,7 +4,13 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 $TCA['tx_sjroffers_domain_model_organization'] = array(
 	'ctrl' => $TCA['tx_sjroffers_domain_model_organization']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'hidden, status, name, description, contacts, offers, administrator'
+		'showRecordFieldList' => 'hidden,status,name,address,telephone_number,telefax_number,url,email_address,description,contacts,offers,administrator'
+	),
+	'types' => array(
+		'1' => array('showitem' => 'hidden,status,name,description,offers,administrator')
+	),
+	'palettes' => array(
+		'1' => array('showitem' => 'telephone_number,telefax_number,url,email_address')
 	),
 	'columns' => array(
 		'sys_language_uid' => array(
@@ -52,29 +58,6 @@ $TCA['tx_sjroffers_domain_model_organization'] = array(
 				'foreign_table' => 'tx_sjroffers_domain_model_status',
 				'foreign_table_where' => 'AND tx_sjroffers_domain_model_status.pid=###CURRENT_PID###',
 				'maxitems' => 1,
-				'wizards' => Array(
-		             '_PADDING' => 1,
-		             '_VERTICAL' => 0,
-		             'edit' => Array(
-		                 'type' => 'popup',
-		                 'title' => 'Edit',
-		                 'script' => 'wizard_edit.php',
-		                 'icon' => 'edit2.gif',
-		                 'popup_onlyOpenIfSelected' => 1,
-		                 'JSopenParams' => 'height=650,width=650,status=0,menubar=0,scrollbars=1',
-		             ),
-		             'add' => Array(
-		                 'type' => 'script',
-		                 'title' => 'Create new',
-		                 'icon' => 'add.gif',
-		                 'params' => Array(
-		                     'table'=>'tx_sjroffers_domain_model_status',
-		                     'pid' => '###CURRENT_PID###',
-		                     'setValue' => 'prepend'
-		                 ),
-		                 'script' => 'wizard_add.php',
-		             ),
-		         ),
 			)
 		),
 		'name' => array(
@@ -209,7 +192,6 @@ $TCA['tx_sjroffers_domain_model_organization'] = array(
 				'items' => array(
 						array('--none--', 0),
 					),
-				'maxitems' => 1,
 				'wizards' => Array(
 		             '_PADDING' => 1,
 		             '_VERTICAL' => 0,
@@ -235,12 +217,6 @@ $TCA['tx_sjroffers_domain_model_organization'] = array(
 		         ),
 			),
 		),
-	),
-	'types' => array(
-		'1' => array('showitem' => 'hidden, status, name, description, contacts, offers, administrator')
-	),
-	'palettes' => array(
-		'1' => array('showitem' => '')
 	)
 );
 
@@ -408,29 +384,6 @@ $TCA['tx_sjroffers_domain_model_offer'] = array(
 				'multiple' => 0,
 				'foreign_table' => 'tx_sjroffers_domain_model_category',
 				'MM' => 'tx_sjroffers_offer_category_mm',
-				'wizards' => Array(
-		             '_PADDING' => 1,
-		             '_VERTICAL' => 1,
-		             'edit' => Array(
-		                 'type' => 'popup',
-		                 'title' => 'Edit',
-		                 'script' => 'wizard_edit.php',
-		                 'icon' => 'edit2.gif',
-		                 'popup_onlyOpenIfSelected' => 1,
-		                 'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
-		             ),
-		             'add' => Array(
-		                 'type' => 'script',
-		                 'title' => 'Create new',
-		                 'icon' => 'add.gif',
-		                 'params' => Array(
-		                     'table'=>'tx_sjroffers_domain_model_category',
-		                     'pid' => '###CURRENT_PID###',
-		                     'setValue' => 'prepend'
-		                 ),
-		                 'script' => 'wizard_add.php',
-		             ),
-		         )
 			)
 		),
 		'regions' => array(		
@@ -619,9 +572,9 @@ $TCA['tx_sjroffers_domain_model_daterange'] = array(
 	'columns' => array(
 		'minimum_value' => array(
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:sjr_offers/Resources/Private/Language/locallang_db.xml:tx_sjroffers_domain_model_daterange.minimum_value',
+			'label'   => 'UNIX-Timestamp',
 			'config'  => array(
-				'type'    => 'input',
+				'type'    => 'none',
 				'size' => 8,
 				'checkbox' => '',
 				'eval' => 'date',

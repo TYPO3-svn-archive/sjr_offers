@@ -76,15 +76,18 @@ class Tx_SjrOffers_Domain_Repository_OfferRepository extends Tx_Extbase_Persiste
 				}
 				$constraints[] = $query->logicalOr($searchWordConstraints);
 			}
-			if ($demand->getAge() !== NULL) {
+			$demandedAge = $demand->getAge();
+			if (!empty($demandedAge)) {
 				$constraints[] = $query->logicalAnd(
 					$query->logicalOr(
 						$query->equals('ageRange.minimumValue', NULL), 
-						$query->lessThanOrEqual('ageRange.minimumValue', $demand->getAge())
+						$query->equals('ageRange.minimumValue', 0), 
+						$query->lessThanOrEqual('ageRange.minimumValue', $demandedAge)
 						),
 					$query->logicalOr(
 						$query->equals('ageRange.maximumValue', NULL), 
-						$query->greaterThanOrEqual('ageRange.maximumValue', $demand->getAge())
+						$query->equals('ageRange.maximumValue', 0), 
+						$query->greaterThanOrEqual('ageRange.maximumValue', $demandedAge)
 						)
 					);
 			}

@@ -30,6 +30,7 @@ class Tx_SjrOffers_Domain_Repository_OrganizationRepository extends Tx_Extbase_P
 	public function findByStates(array $states) {
 		$query = $this->createQuery();
 		$query->matching($query->in('status', $states));
+		$query->setOrderings(array('name' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING));
 		return $query->execute();
 
 	}

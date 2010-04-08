@@ -28,7 +28,7 @@
 				<f:render partial="contact" arguments="{contact : contact}" />
 				<sjr:security.ifAccessGranted person="{organization.administrator}">
 					<f:render partial="formErrors" arguments="{for: 'person'}" />
-					<f:form class="tx-sjroffers-form" class="toggleForm" style="display: none;" method="post" action="updateContact" controller="Organization" name="contact" object="{contact}" arguments="{organization: organization}">
+					<f:form class="tx-sjroffers-form toggleForm" style="display: none;" method="post" action="updateContact" controller="Organization" name="contact" object="{contact}" arguments="{organization: organization}">
 						<label for="name">Name</label>
 						<f:form.textbox property="name" size="46" /><br />
 						<label for="role">Zuständigkeit, Aufgabengebiet</label>

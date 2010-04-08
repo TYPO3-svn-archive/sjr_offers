@@ -1,8 +1,9 @@
 plugin.tx_sjroffers {
 	settings {
 		propertiesToSearch = title,teaser,description
-		allowedStates = 2
-		listCategories = 9
+		allowedStates = 
+		listCategories = 
+		selectableCategories = 
 	}
 	persistence {
 		storagePid = {$plugin.tx_sjroffers.persistence.storagePid}
@@ -19,6 +20,7 @@ plugin.tx_sjroffers._CSS_DEFAULT_STYLE (
 		font-weight: bold;
 		display: block;
 		vertical-align: top;
+		margin: 1em 0 0 0;
 	}
 	td.tx-sjroffers-column0 {
 		font-weight: bold;

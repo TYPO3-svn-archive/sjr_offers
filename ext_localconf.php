@@ -5,7 +5,7 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,
 	'list',
 	array(	 
-		'Offer' => 'index,show,new,create,edit,update,delete,createContact,setContact,updateContact,removeContact',
+		'Offer' => 'index,listOrganizations,show,new,create,edit,update,delete,createContact,setContact,updateContact,removeContact',
 		'Organization' => 'index,show,edit,update,removeOffer,createContact,updateContact,removeContact', 
 		'Person' => 'new,create,edit,update,delete',
 		),
@@ -20,8 +20,8 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,
 	'organizations',
 	array(	 
-		'Organization' => 'index,show,edit,update,removeOffer,createContact,updateContact,removeContact', 
 		'Offer' => 'index,show,new,create,edit,update,delete,createContact,setContact,updateContact,removeContact',
+		'Organization' => 'index,show,edit,update,removeOffer,createContact,updateContact,removeContact', 
 		'Person' => 'new,create,edit,update,delete',
 		),
 	array(

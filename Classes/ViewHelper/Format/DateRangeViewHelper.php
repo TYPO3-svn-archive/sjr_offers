@@ -56,7 +56,7 @@ class Tx_SjrOffers_ViewHelper_Format_DateRangeViewHelper extends Tx_Fluid_Core_V
 				} else {
 					$output = $minimumValue->format('d.m.Y') . ' -&nbsp;' . $maximumValue->format('d.m.Y');					
 				}
-			}			
+			}
 		} else {
 			$output = 'ganzjährig';
 		}
