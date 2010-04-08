@@ -36,7 +36,6 @@
 				<button id="addAttendanceFee">Weiteren Preis hinzufügen</button><br />
 
 				<label for="categories">Kategorien <a href="#" onclick="document.offer['categories'].selectedIndex=-1; return false;">(alles abwählen)</a></label>
-				<input type="hidden" name="tx_sjroffers_list[offer][categories]" />
 				<f:form.select id="categories" property="categories" options="{offer.organization.status.allowedCategories}" optionValueField="uid" multiple="multiple" size="5" style="width: 20em;"><select><option>###dummy###</option></select></f:form.select><br />
 				<label for="regions">Stadtteile <a href="#" onclick="document.offer['regions'].selectedIndex=-1; return false;">(alles abwählen)</a></label>
 				<f:form.select id="regions" property="regions" options="{regions}" optionValueField="uid" multiple="multiple" size="20" style="width: 20em;"><select><option>###dummy###</option></select></f:form.select><br />
