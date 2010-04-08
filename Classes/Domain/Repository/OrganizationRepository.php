@@ -26,6 +26,13 @@
  * A repository for Organizations
  */
 class Tx_SjrOffers_Domain_Repository_OrganizationRepository extends Tx_Extbase_Persistence_Repository {
+	
+	public function findByStates(array $states) {
+		$query = $this->createQuery();
+		$query->matching($query->in('status', $states));
+		return $query->execute();
+
+	}
 
 }
 ?>

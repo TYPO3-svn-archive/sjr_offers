@@ -1,9 +1,8 @@
 plugin.tx_sjroffers {
 	settings {
 		propertiesToSearch = title,teaser,description
-		allowedCategories = 
-		forceCategories = 
-		listCategory = 
+		allowedStates = 2
+		listCategories = 9
 	}
 	persistence {
 		storagePid = {$plugin.tx_sjroffers.persistence.storagePid}

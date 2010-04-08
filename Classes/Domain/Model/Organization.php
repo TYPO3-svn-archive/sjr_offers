@@ -28,6 +28,11 @@
 class Tx_SjrOffers_Domain_Model_Organization extends Tx_Extbase_DomainObject_AbstractEntity {
 	
 	/**
+	 * @var Tx_SjrOffers_Domain_Model_Status The status of the organization
+	 **/
+	protected $status;
+
+	/**
 	 * @var string The name of the organization
 	 **/
 	protected $name;
@@ -90,6 +95,25 @@ class Tx_SjrOffers_Domain_Model_Organization extends Tx_Extbase_DomainObject_Abs
 	    $this->setName($name);
 	    $this->contacts = new Tx_Extbase_Persistence_ObjectStorage;
 	    $this->offers = new Tx_Extbase_Persistence_ObjectStorage;
+	}
+	
+	/**
+	 * Setter for status
+	 *
+	 * @param Tx_SjrOffers_Domain_Model_Status $status The status of the organization
+	 * @return void
+	 */
+	public function setStatus(Tx_SjrOffers_Domain_Model_Status $status) {
+		$this->status = $status;
+	}
+
+	/**
+	 * Getter for status
+	 *
+	 * @return Tx_SjrOffers_Domain_Model_Status $status The status of the organization
+	 */
+	public function getStatus() {
+		return $this->status;
 	}
 	
 	/**

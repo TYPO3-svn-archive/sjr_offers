@@ -63,14 +63,19 @@ class Tx_SjrOffers_Controller_OfferController extends Tx_Extbase_MVC_Controller_
 	 * @return string The rendered HTML string
 	 */
 	public function indexAction(Tx_SjrOffers_Domain_Model_Demand $demand = NULL) {
+		$allowedStates = (is_string($this->settings['allowedStates']) && strlen($this->settings['allowedStates']) > 0) ? t3lib_div::intExplode(',', $this->settings['allowedStates']) : array();
+		$listCategories = (is_string($this->settings['listCategories']) && strlen($this->settings['listCategories']) > 0) ? t3lib_div::intExplode(',', $this->settings['listCategories']) : array();
 		$this->view->assign('demand', $demand);
-		$this->view->assign('organizations', array_merge(array(0 => 'Alle Organisationen'), $this->organizationRepository->findAll()));
+		$this->view->assign('organizations', array_merge(array(0 => 'Alle Organisationen'), $this->organizationRepository->findByStates($allowedStates)));
 		$this->view->assign('categories', array_merge(array(0 => 'Alle Kategorien'), $this->categoryRepository->findAllNonInternal()));
 		$this->view->assign('regions', array_merge(array(0 => 'Alle Stadtteile'), $this->regionRepository->findAll()));
 		$this->view->assign('offers', $this->offerRepository->findDemanded(
 			$demand,
 			t3lib_div::trimExplode(',', $this->settings['propertiesToSearch']),
-			intval($this->settings['listCategory'])));
+			$listCategories,
+			$allowedStates
+			));
+			
 	}
 	
 	/**
@@ -102,11 +107,6 @@ class Tx_SjrOffers_Controller_OfferController extends Tx_Extbase_MVC_Controller_
 			$this->view->assign('organization', $organization);
 			$this->view->assign('newOffer', $newOffer);
 			$frontendUserGroups = $this->accessControllService->getFrontendUserGroups();
-			if (!empty($this->settings['allowedCategories'])) {
-				$this->view->assign('categories', $this->categoryRepository->findAllowed(t3lib_div::intExplode(',', $this->settings['allowedCategories'])));
-			} else {
-				$this->view->assign('categories', $this->categoryRepository->findAll());
-			}
 			$this->view->assign('regions', $this->regionRepository->findAll());
 			$this->view->assign('contacts', $organization->getAllContacts());
 			$this->response->addAdditionalHeaderData($this->additionalHeaderData);
@@ -129,7 +129,6 @@ class Tx_SjrOffers_Controller_OfferController extends Tx_Extbase_MVC_Controller_
 			$newOffer = $this->createAndAddAttendanceFees($newOffer, $attendanceFees);
 			$organization->addOffer($newOffer);
 			$newOffer->setOrganization($organization);
-			$this->addForcedCategories($newOffer);
 		} else {
 			$this->flashMessages->add('Sie haben keine Berechtigung die Aktion auszuführen.');
 		}
@@ -147,12 +146,6 @@ class Tx_SjrOffers_Controller_OfferController extends Tx_Extbase_MVC_Controller_
 	public function editAction(Tx_SjrOffers_Domain_Model_Offer $offer) {
 		if ($this->accessControllService->hasLoggedInBackendAdmin() || $this->accessControllService->hasAccess($offer->getOrganization()->getAdministrator())) {
 			$this->view->assign('offer', $offer);
-			$this->view->assign('organization', $offer->getOrganization());
-			if (!empty($this->settings['allowedCategories'])) {
-				$this->view->assign('categories', $this->categoryRepository->findAllowed(t3lib_div::intExplode(',', $this->settings['allowedCategories'])));
-			} else {
-				$this->view->assign('categories', $this->categoryRepository->findAll());
-			}
 			$this->view->assign('regions', $this->regionRepository->findAll());
 			$this->response->addAdditionalHeaderData($this->additionalHeaderData);
 		} else {
@@ -172,7 +165,6 @@ class Tx_SjrOffers_Controller_OfferController extends Tx_Extbase_MVC_Controller_
 		if ($this->accessControllService->hasLoggedInBackendAdmin() || $this->accessControllService->hasAccess($offer->getOrganization()->getAdministrator())) {
 			$offer->removeAllAttendanceFees();
 			$offer = $this->createAndAddAttendanceFees($offer, $attendanceFees);
-			$this->addForcedCategories($offer);
 			$this->offerRepository->update($offer);
 		} else {
 			$this->flashMessages->add('Sie haben keine Berechtigung die Aktion auszuführen.');
@@ -272,23 +264,6 @@ class Tx_SjrOffers_Controller_OfferController extends Tx_Extbase_MVC_Controller_
 		foreach ($attendanceFees['amount'] as $key => $amount) {
 			if ($amount !== '') {
 				$offer->addAttendanceFee(new Tx_SjrOffers_Domain_Model_AttendanceFee($amount, $attendanceFees['comment'][$key]));
-			}
-		}
-		return $offer;
-	}
-	
-	/**
-	 * Adds categories that are mandatory in the givern setup
-	 *
-	 * @param Tx_SjrOffers_Domain_Model_Offer $offer 
-	 * @return Tx_SjrOffers_Domain_Model_Offer
-	 */
-	protected function addForcedCategories(Tx_SjrOffers_Domain_Model_Offer $offer) {
-		if (!empty($this->settings['forceCategories'])) {
-			$forcedCategories = t3lib_div::intExplode(',', $this->settings['forceCategories']);
-			foreach ($forcedCategories as $categoryUid) {
-				$category = $this->categoryRepository->findByUid($categoryUid);
-				$offer->addCategory($this->categoryRepository->findByUid($categoryUid));
 			}
 		}
 		return $offer;

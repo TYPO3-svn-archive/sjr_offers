@@ -30,10 +30,10 @@ class Tx_SjrOffers_Domain_Repository_OfferRepository extends Tx_Extbase_Persiste
 	/**
 	 * Finds all offers that are offerd by the given organization
 	 *
-	 * @param mixed $listCategories An array of categories the offer has to be assigned to
+	 * @param array $listCategories An array of categories the offer has to be assigned to
 	 * @return array Matched offers
 	 */
-	public function findForAdmin(Tx_SjrOffers_Domain_Model_Organization $organization, $listCategory = NULL) {
+	public function findForAdmin(Tx_SjrOffers_Domain_Model_Organization $organization, array $listCategories = array()) {
 		$query = $this->createQuery();
 		$query->matching(
 			$query->equals('organization', $organization)
@@ -52,10 +52,11 @@ class Tx_SjrOffers_Domain_Repository_OfferRepository extends Tx_Extbase_Persiste
 	 *
 	 * @param Tx_SjrOffers_Domain_Model_Demand $demand 
 	 * @param array $propertiesToSearch A array of properties to be searched for occurrances of the search word
-	 * @param array $listCategories An array of categories the offer hs to be assigned to
+	 * @param array $listCategories An array of categories the offer has to be assigned to
+	 * @param array $allowedStates An array of allowed states of the organization
 	 * @return array Matched offers
 	 */
-	public function findDemanded(Tx_SjrOffers_Domain_Model_Demand $demand = NULL, array $propertiesToSearch = array(), $listCategory = NULL) {
+	public function findDemanded(Tx_SjrOffers_Domain_Model_Demand $demand = NULL, array $propertiesToSearch = array(), array $listCategories = array(), array $allowedStates = array()) {
 		$query = $this->createQuery();
 		$constraints = array();
 		if ($demand !== NULL) {
@@ -88,8 +89,15 @@ class Tx_SjrOffers_Domain_Repository_OfferRepository extends Tx_Extbase_Persiste
 					);
 			}
 		}
-		if (!empty($listCategory)) {
-			$constraints[] = $query->contains('categories', intval($listCategory));
+		if (count($listCategories) >0) {
+			$categoryConstraints = array();
+			foreach ($listCategories as $listCategory) {
+				$categoryConstraints[] = $query->contains('categories', $listCategory);
+			}
+			$constraints[] = $query->logicalOr($categoryConstraints);
+		}
+		if (count($allowedStates) > 0) {
+			$constraints[] = $query->in('organization.status', $allowedStates);
 		}
 		$query->setOrderings(
 			array(

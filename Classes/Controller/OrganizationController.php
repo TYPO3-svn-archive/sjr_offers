@@ -62,7 +62,7 @@ class Tx_SjrOffers_Controller_OrganizationController extends Tx_Extbase_MVC_Cont
 	 * @return string The rendered view
 	 */
 	public function indexAction() {
-		$this->view->assign('organizations', $this->organizationRepository->findAll());
+		$this->view->assign('organizations', $this->organizationRepository->findByStates(t3lib_div::intExplode(',', $this->settings['allowedStates'])));
 	}
 	
 	/**

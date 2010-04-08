@@ -2,6 +2,7 @@ CREATE TABLE tx_sjroffers_domain_model_organization (
 	uid int(10) unsigned DEFAULT '0' NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 	
+	status int(11) unsigned DEFAULT '0' NOT NULL,
 	name varchar(255) NOT NULL,
 	address text NOT NULL,
 	telephone_number varchar(80) NOT NULL,
@@ -145,6 +146,26 @@ CREATE TABLE tx_sjroffers_domain_model_category (
 	KEY parent (pid),
 );
 
+CREATE TABLE tx_sjroffers_domain_model_status (
+	uid int(10) unsigned DEFAULT '0' NOT NULL auto_increment,
+	pid int(11) DEFAULT '0' NOT NULL,
+
+	title varchar(255) DEFAULT '' NOT NULL,
+	description text NOT NULL,
+	allowed_categories int(11) NOT NULL,
+		
+	tstamp int(10) unsigned NOT NULL,
+	crdate int(10) unsigned NOT NULL,
+	deleted tinyint(3) unsigned DEFAULT '0' NOT NULL,
+	hidden tinyint(3) unsigned DEFAULT '0' NOT NULL,
+	sys_language_uid int(11) DEFAULT '0' NOT NULL,
+	l18n_parent int(11) DEFAULT '0' NOT NULL,
+	l18n_diffsource mediumblob NOT NULL,
+
+	PRIMARY KEY (uid),
+	KEY parent (pid),
+);
+
 CREATE TABLE tx_sjroffers_domain_model_region (
 	uid int(10) unsigned DEFAULT '0' NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
@@ -182,6 +203,27 @@ CREATE TABLE tx_sjroffers_organization_person_mm (
 );
 
 CREATE TABLE tx_sjroffers_offer_category_mm (
+	uid int(10) unsigned DEFAULT '0' NOT NULL auto_increment,
+	pid int(11) DEFAULT '0' NOT NULL,
+	
+	uid_local int(10) unsigned NOT NULL,
+	uid_foreign int(10) unsigned NOT NULL,
+	sorting int(10) unsigned NOT NULL,
+	sorting_foreign int(10) unsigned NOT NULL,
+
+	tstamp int(10) unsigned NOT NULL,
+	crdate int(10) unsigned NOT NULL,
+	deleted tinyint(3) unsigned DEFAULT '0' NOT NULL,
+	hidden tinyint(3) unsigned DEFAULT '0' NOT NULL,
+	sys_language_uid int(11) DEFAULT '0' NOT NULL,
+	l18n_parent int(11) DEFAULT '0' NOT NULL,
+	l18n_diffsource mediumblob NOT NULL,
+
+	PRIMARY KEY (uid),
+	KEY parent (pid,uid_local,uid_foreign)
+);
+
+CREATE TABLE tx_sjroffers_status_category_mm (
 	uid int(10) unsigned DEFAULT '0' NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 	

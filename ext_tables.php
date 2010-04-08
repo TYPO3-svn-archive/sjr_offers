@@ -134,6 +134,28 @@ $TCA['tx_sjroffers_domain_model_category'] = array (
 	)
 );
 
+t3lib_extMgm::allowTableOnStandardPages('tx_sjroffers_domain_model_status');
+$TCA['tx_sjroffers_domain_model_status'] = array (
+	'ctrl' => array (
+		'title'             => 'LLL:EXT:sjr_offers/Resources/Private/Language/locallang_db.xml:tx_sjroffers_domain_model_status',
+		'label'				=> 'title',
+		'tstamp'            => 'tstamp',
+		'crdate'            => 'crdate',
+		'languageField' 	=> 'sys_language_uid',
+		'transOrigPointerField' 	=> 'l18n_parent',
+		'transOrigDiffSourceField' 	=> 'l18n_diffsource',
+		'prependAtCopy' 	=> 'LLL:EXT:lang/locallang_general.xml:LGL.prependAtCopy',
+		'copyAfterDuplFields' 		=> 'sys_language_uid',
+		'useColumnsForDefaultValues' => 'sys_language_uid',
+		'delete'            => 'deleted',
+		'enablecolumns'     => array(
+			'disabled' => 'hidden'
+		),
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tca.php',
+		'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/icon_tx_sjroffers_domain_model_status.gif'
+	)
+);
+
 t3lib_extMgm::allowTableOnStandardPages('tx_sjroffers_domain_model_region');
 $TCA['tx_sjroffers_domain_model_region'] = array (
 	'ctrl' => array (

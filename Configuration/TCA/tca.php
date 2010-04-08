@@ -4,7 +4,7 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 $TCA['tx_sjroffers_domain_model_organization'] = array(
 	'ctrl' => $TCA['tx_sjroffers_domain_model_organization']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'hidden, name, description, contacts, offers, administrator'
+		'showRecordFieldList' => 'hidden, status, name, description, contacts, offers, administrator'
 	),
 	'columns' => array(
 		'sys_language_uid' => array(
@@ -42,6 +42,39 @@ $TCA['tx_sjroffers_domain_model_organization'] = array(
 			'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
 			'config'  => array(
 				'type' => 'check'
+			)
+		),
+		'status' => array(
+			'exclude' => 0,
+			'label'   => 'LLL:EXT:sjr_offers/Resources/Private/Language/locallang_db.xml:tx_sjroffers_domain_model_organization.status',
+			'config'  => array(
+				'type' => 'select',
+				'foreign_table' => 'tx_sjroffers_domain_model_status',
+				'foreign_table_where' => 'AND tx_sjroffers_domain_model_status.pid=###CURRENT_PID###',
+				'maxitems' => 1,
+				'wizards' => Array(
+		             '_PADDING' => 1,
+		             '_VERTICAL' => 0,
+		             'edit' => Array(
+		                 'type' => 'popup',
+		                 'title' => 'Edit',
+		                 'script' => 'wizard_edit.php',
+		                 'icon' => 'edit2.gif',
+		                 'popup_onlyOpenIfSelected' => 1,
+		                 'JSopenParams' => 'height=650,width=650,status=0,menubar=0,scrollbars=1',
+		             ),
+		             'add' => Array(
+		                 'type' => 'script',
+		                 'title' => 'Create new',
+		                 'icon' => 'add.gif',
+		                 'params' => Array(
+		                     'table'=>'tx_sjroffers_domain_model_status',
+		                     'pid' => '###CURRENT_PID###',
+		                     'setValue' => 'prepend'
+		                 ),
+		                 'script' => 'wizard_add.php',
+		             ),
+		         ),
 			)
 		),
 		'name' => array(
@@ -204,7 +237,7 @@ $TCA['tx_sjroffers_domain_model_organization'] = array(
 		),
 	),
 	'types' => array(
-		'1' => array('showitem' => 'hidden, name, description, contacts, offers, administrator')
+		'1' => array('showitem' => 'hidden, status, name, description, contacts, offers, administrator')
 	),
 	'palettes' => array(
 		'1' => array('showitem' => '')
@@ -728,6 +761,84 @@ $TCA['tx_sjroffers_domain_model_category'] = array(
 	),
 	'types' => array(
 		'1' => array('showitem' => 'hidden, title, description, is_internal')
+	),
+	'palettes' => array(
+		'1' => array('showitem' => '')
+	)
+);
+
+$TCA['tx_sjroffers_domain_model_status'] = array(
+	'ctrl' => $TCA['tx_sjroffers_domain_model_status']['ctrl'],
+	'interface' => array(
+		'showRecordFieldList' => 'hidden, title, description, allowed_categories'
+	),
+	'columns' => array(
+		'hidden' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
+			'config'  => array(
+				'type' => 'check'
+			)
+		),
+		'title' => array(
+			'exclude' => 0,
+			'label'   => 'LLL:EXT:sjr_offers/Resources/Private/Language/locallang_db.xml:tx_sjroffers_domain_model_status.title',
+			'config'  => array(
+				'type' => 'input',
+				'size' => 20,
+				'eval' => 'trim, required',
+				'max'  => 256
+			)
+		),
+		'description' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:sjr_offers/Resources/Private/Language/locallang_db.xml:tx_sjroffers_domain_model_status.description',
+			'config'  => array(
+				'type' => 'text',
+				'rows' => 10,
+				'cols' => 60,
+			)
+		),
+		'allowed_categories' => array(		
+			'exclude' => 1,		
+			'label'   => 'LLL:EXT:sjr_offers/Resources/Private/Language/locallang_db.xml:tx_sjroffers_domain_model_status.allowed_categories',
+			'config' => array(
+				'type' => 'select',
+				'size' => 10,
+				'minitems' => 0,
+				'maxitems' => 9999,
+				'autoSizeMax' => 5,
+				'multiple' => 0,
+				'foreign_table' => 'tx_sjroffers_domain_model_category',
+				'MM' => 'tx_sjroffers_status_category_mm',
+				'wizards' => Array(
+		             '_PADDING' => 1,
+		             '_VERTICAL' => 1,
+		             'edit' => Array(
+		                 'type' => 'popup',
+		                 'title' => 'Edit',
+		                 'script' => 'wizard_edit.php',
+		                 'icon' => 'edit2.gif',
+		                 'popup_onlyOpenIfSelected' => 1,
+		                 'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
+		             ),
+		             'add' => Array(
+		                 'type' => 'script',
+		                 'title' => 'Create new',
+		                 'icon' => 'add.gif',
+		                 'params' => Array(
+		                     'table'=>'tx_sjroffers_domain_model_category',
+		                     'pid' => '###CURRENT_PID###',
+		                     'setValue' => 'prepend'
+		                 ),
+		                 'script' => 'wizard_add.php',
+		             ),
+		         )
+			)
+		)
+	),
+	'types' => array(
+		'1' => array('showitem' => 'hidden, title, description, allowed_categories')
 	),
 	'palettes' => array(
 		'1' => array('showitem' => '')
