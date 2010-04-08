@@ -140,6 +140,9 @@ class Tx_SjrOffers_Domain_Model_Offer extends Tx_Extbase_DomainObject_AbstractEn
 	 * @return Tx_SjrOffers_Domain_Model_Organization The organization the offer belongs to
 	 */
 	public function getOrganization() {
+		if ($this->organization instanceof Tx_Extbase_PErsistence_LazyLoadingProxy) {
+		  $this->organization->_loadRealInstance();
+		}
 		return $this->organization;
 	}
 

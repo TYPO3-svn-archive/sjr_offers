@@ -5,6 +5,9 @@
 *  (c) 2009 Jochen Rau <jochen.rau@typoplanet.de>
 *  All rights reserved
 *
+*  This class is a backport of the corresponding class of FLOW3. 
+*  All credits go to the v5 team.
+*
 *  This script is part of the TYPO3 project. The TYPO3 project is
 *  free software; you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -23,31 +26,30 @@
 ***************************************************************/
 
 /**
- * A repository for Categories
+ * Validator for AttendanceFees
+ *
+ * @package sjr_offers
+ * @scope prototype
  */
-class Tx_SjrOffers_Domain_Repository_CategoryRepository extends Tx_Extbase_Persistence_Repository {
-	
+class Tx_SjrOffers_Domain_Validator_OfferValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
+
 	/**
-	 * Finds all categories that are not marked as internal. Internal categories can be used to attach "hidden" categories.
+	 * Returns TRUE, if the given offer
 	 *
-	 * @return array Matched categories
-	 */
-	public function findAllNonInternal() {
-		$query = $this->createQuery();
-		$query->matching($query->equals('isInternal', FALSE));
-		return $query->execute();		
-	}
-	
-	/**
-	 * Finds all categories that are allowed to be shown
+	 * If at least one error occurred, the result is FALSE.
 	 *
-	 * @return mixed Allowed categories (an array of uids or an array of Categgory objects)
+	 * @param mixed $value The value that should be validated
+	 * @return boolean TRUE if the value is an amount, otherwise FALSE
 	 */
-	public function findAllowed($allowedCategories) {
-		$query = $this->createQuery();
-		$query->matching($query->in('uid', $allowedCategories));
-		return $query->execute();		
+	public function isValid($value) {
+		
+		$this->errors = array();
+		// if (preg_match("/^([0-9]{1,3}(\.[0-9]{3})*(,[0-9]+)?|,[ 0-9]+)$/", $input, $matches)) {
+		// 	return TRUE;
+		// }
+		// $this->addError('Bitte geben Sie Beträge mit Komma als Dezimaltrenner und Punkt als Tausendertrenner ein.', 1234567678);
+		return TRUE;
 	}
-	
 }
+
 ?>

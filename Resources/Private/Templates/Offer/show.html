@@ -36,7 +36,7 @@
 		<f:if condition="{offer.ageRange}">
 		<tr>
 			<td valign="top" class="tx-sjroffers-column0">Alter</td>
-			<td valign="top"><sjr:format.range>{offer.ageRange}</sjr:format.range></td>
+			<td valign="top"><sjr:format.numericRange>{offer.ageRange}</sjr:format.numericRange></td>
 		</tr>
 		</f:if>
 		<f:if condition="{offer.attendanceFees}">
@@ -64,7 +64,7 @@
 		<tr>
 			<td valign="top" class="tx-sjroffers-column0">Teilnehmerzahl</td>
 			<td valign="top">
-				<sjr:format.range>{offer.attendanceRange}</sjr:format.range>
+				<sjr:format.numericRange>{offer.attendanceRange}</sjr:format.numericRange>
 			</td>
 		</tr>
 		</f:if>

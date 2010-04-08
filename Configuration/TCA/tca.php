@@ -335,6 +335,9 @@ $TCA['tx_sjroffers_domain_model_offer'] = array(
 				'minitems' => 0,
 				'maxitems' => 1,
 				'foreign_table' => 'tx_sjroffers_domain_model_person',
+				'items' => array(
+						array('--none--', NULL),
+					),
 				'wizards' => Array(
 		             '_PADDING' => 1,
 		             '_VERTICAL' => 1,

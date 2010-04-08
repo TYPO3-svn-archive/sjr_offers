@@ -25,7 +25,7 @@
 /**
  * View helper for rendering contraints.
  */
-class Tx_SjrOffers_ViewHelper_Format_RangeViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_SjrOffers_ViewHelper_Format_NumericRangeViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
 	 * Render the supplied range as formatted string
@@ -51,22 +51,6 @@ class Tx_SjrOffers_ViewHelper_Format_RangeViewHelper extends Tx_Fluid_Core_ViewH
 					$output = $minimumValue . '&nbsp;-&nbsp;' . $maximumValue;					
 				}
 			}
-		} elseif ($range instanceof Tx_SjrOffers_Domain_Model_DateRangeInterface) {
-			$minimumValue = $range->getMinimumValue();
-			$maximumValue = $range->getMaximumValue();	
-			if (empty($minimumValue) && empty($maximumValue)) {
-				$output = 'ganzjährig';
-			} elseif (empty($minimumValue) && !empty($maximumValue)) {
-				$output = 'bis ' . $maximumValue->format('d.m.Y');
-			} elseif (!empty($minimumValue) && empty($maximumValue)) {
-				$output = 'ab ' . $minimumValue->format('d.m.Y');
-			} else {
-				if ($minimumValue->format('d.m.Y') === $maximumValue->format('d.m.Y')) {
-					$output = 'am ' . $minimumValue->format('d.m.Y');
-				} else {
-					$output = $minimumValue->format('d.m.Y') . ' -&nbsp;' . $maximumValue->format('d.m.Y');					
-				}
-			}			
 		}
 		return $output;
 	}

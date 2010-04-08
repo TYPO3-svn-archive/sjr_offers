@@ -316,27 +316,7 @@ class Tx_SjrOffers_Domain_Model_Organization extends Tx_Extbase_DomainObject_Abs
 	public function getOffers() {
 		return clone $this->offers;
 	}
-		
-	/**
-	 * Returns available offers
-	 *
-	 * @param Tx_SjrOffers_Domain_Model_Category The category to restict the selection to
-	 * @return array<Tx_SjrOffers_Domain_Model_Offer> The offers 
-	 */
-	public function getAvailableOffers(Tx_SjrOffers_Domain_Model_Category $category = NULL) {
-		$offers = array();
-		foreach ($this->offers as $offer) {
-			// if ($category !== NULL && !$offer->getCategories()->contains($category)) continue;
-			$endDate = $offer->getDateRange()->getMaximumValue();
-			if (!($endDate instanceof DateTime)) {
-				$offers[] = $offer;
-			} elseif ($endDate->format('U') > (time() - 60*60*24*7)) {
-				$offers[] = $offer;
-			}
-		}
-		return $offers;
-	}
-		
+			
 	/**
 	 * Adds an offer to the organization
 	 *
@@ -372,6 +352,9 @@ class Tx_SjrOffers_Domain_Model_Organization extends Tx_Extbase_DomainObject_Abs
 	 * @return  Tx_SjrOffers_Domain_Model_Administrator The administrator of the organization
 	 */
 	public function getAdministrator() {
+		if ($this->administrator instanceof Tx_Extbase_PErsistence_LazyLoadingProxy) {
+		  $this->administrator->_loadRealInstance();
+		}
 		return $this->administrator;
 	}
 

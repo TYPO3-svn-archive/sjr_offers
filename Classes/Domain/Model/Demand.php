@@ -57,7 +57,7 @@ class Tx_SjrOffers_Domain_Model_Demand extends Tx_Extbase_DomainObject_AbstractE
 	 * @param Tx_SjrOffers_Domain_Model_Organization $organization The demanded organization
 	 * @return void
 	 */
-	public function setOrganization($organization) {
+	public function setOrganization(Tx_SjrOffers_Domain_Model_Organization $organization = NULL) {
 		$this->organization = $organization;
 	}
 

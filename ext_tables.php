@@ -163,12 +163,6 @@ $TCA['tx_sjroffers_organization_person_mm'] = array (
 		'label'				=> 'uid_local',
 		'label_alt'			=> 'uid_foreign',
 		'label_alt_force'	=> TRUE,
-		'languageField' 	=> 'sys_language_uid',
-		'transOrigPointerField' 	=> 'l18n_parent',
-		'transOrigDiffSourceField' 	=> 'l18n_diffsource',
-		'prependAtCopy' 	=> 'LLL:EXT:lang/locallang_general.xml:LGL.prependAtCopy',
-		'copyAfterDuplFields' 		=> 'sys_language_uid',
-		'useColumnsForDefaultValues' => 'sys_language_uid',
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tca.php',
 		'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/icon_relation.gif'
 	)

@@ -27,10 +27,10 @@
 	</f:form>
 	<f:if condition="{offers}">
 		<f:then>
-			<f:for each="{sjr:order(subjects: '{offers}', propertyPath: 'dateRange.minimumValue')}" as="offer">
+			<f:for each="{offers}" as="offer">
 				<tr>
 					<td valign="top" width="20%">
-						<sjr:format.range>{offer.dateRange}</sjr:format.range>
+						<sjr:format.dateRange>{offer.dateRange}</sjr:format.dateRange>
 					</td>
 					<td valign="top" width="30%">
 						<f:link.action action="show" controller="Offer" arguments="{offer : offer}"><strong>{offer.title}</strong></f:link.action>
@@ -46,7 +46,7 @@
 						</f:if>
 					</td>
 					<td valign="top">
-						<sjr:format.range>{offer.ageRange}</sjr:format.range>
+						<sjr:format.numericRange>{offer.ageRange}</sjr:format.numericRange>
 					</td>
 					<td valign="top">
 						<f:if condition="{offer.categories}">

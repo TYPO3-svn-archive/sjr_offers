@@ -43,6 +43,7 @@ class Tx_SjrOffers_Controller_OrganizationController extends Tx_Extbase_MVC_Cont
 	public function initializeAction() {
 		$this->accessControllService = t3lib_div::makeInstance('Tx_SjrOffers_Service_AccessControlService');
 		$this->organizationRepository = t3lib_div::makeInstance('Tx_SjrOffers_Domain_Repository_OrganizationRepository');
+		$this->offerRepository = t3lib_div::makeInstance('Tx_SjrOffers_Domain_Repository_OfferRepository');
 		$this->personRepository = t3lib_div::makeInstance('Tx_SjrOffers_Domain_Repository_PersonRepository');
 		$this->categoryRepository = t3lib_div::makeInstance('Tx_SjrOffers_Domain_Repository_CategoryRepository');
 		// FIXME inclusion of jQuery not that elegant:
@@ -75,8 +76,12 @@ class Tx_SjrOffers_Controller_OrganizationController extends Tx_Extbase_MVC_Cont
 	public function showAction(Tx_SjrOffers_Domain_Model_Organization $organization, Tx_SjrOffers_Domain_Model_Person $newContact = NULL) {
 		if ($this->accessControllService->hasLoggedInBackendAdmin() || $this->accessControllService->hasAccess($organization->getAdministrator())) {
 			$contacts = $organization->getAllContacts();
+			$this->view->assign('offers', $this->offerRepository->findForAdmin($organization));
 		} else {
 			$contacts = $organization->getContacts();
+			$demand = t3lib_div::makeInstance('Tx_SjrOffers_Domain_Model_Demand');
+			$demand->setOrganization($organization);
+			$this->view->assign('offers', $this->offerRepository->findDemanded($demand));
 		}
 		$this->view->assign('contacts', $contacts);
 		$this->view->assign('organization', $organization);

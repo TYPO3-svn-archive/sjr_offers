@@ -46,18 +46,18 @@ class Tx_SjrOffers_Service_AccessControlService {
 		return $GLOBALS['TSFE']->beUserLogin === 1 ? TRUE : FALSE;
 	}
 	
-	protected function hasLoggedInFrontendUser() {
+	public function hasLoggedInFrontendUser() {
 		return $GLOBALS['TSFE']->loginUser === 1 ? TRUE : FALSE;
 	}
 	
-	protected function getFrontendUserGroups() {
+	public function getFrontendUserGroups() {
 		if($this->hasLoggedInFrontendUser()) {
 			return $GLOBALS['TSFE']->fe_user->groupData['uid'];
 		}
 		return array();
 	}
 	
-	protected function getFrontendUserUid() {
+	public function getFrontendUserUid() {
 		if($this->hasLoggedInFrontendUser() && !empty($GLOBALS['TSFE']->fe_user->user['uid'])) {
 			return intval($GLOBALS['TSFE']->fe_user->user['uid']);
 		}
