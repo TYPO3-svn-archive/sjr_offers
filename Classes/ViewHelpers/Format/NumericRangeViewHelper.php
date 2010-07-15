@@ -30,11 +30,14 @@ class Tx_SjrOffers_ViewHelpers_Format_NumericRangeViewHelper extends Tx_Fluid_Co
 	/**
 	 * Render the supplied range as formatted string
 	 *
+	 * @param Tx_SjrOffers_Domain_Model_NumericRangeInterface $range The numeric range
 	 * @return string Formatted range
 	 */
-	public function render() {
+	public function render(Tx_SjrOffers_Domain_Model_NumericRangeInterface $range = NULL) {
 		$output = '';
-		$range = $this->renderChildren();
+		if ($range === NULL) {
+			$range = $this->renderChildren();
+		}
 		if ($range instanceof Tx_SjrOffers_Domain_Model_NumericRangeInterface) {
 			$minimumValue = $range->getMinimumValue();
 			$maximumValue = $range->getMaximumValue();

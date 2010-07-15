@@ -30,11 +30,14 @@ class Tx_SjrOffers_ViewHelpers_Format_DateRangeViewHelper extends Tx_Fluid_Core_
 	/**
 	 * Render the supplied range as formatted string
 	 *
+	 * @param Tx_SjrOffers_Domain_Model_DateRangeInterface $range The date range
 	 * @return string Formatted range
 	 */
-	public function render() {
+	public function render(Tx_SjrOffers_Domain_Model_DateRangeInterface $range = NULL) {
 		$output = '';
-		$range = $this->renderChildren();
+		if ($range === NULL) {
+			$range = $this->renderChildren();
+		}
 		if ($range instanceof Tx_SjrOffers_Domain_Model_DateRangeInterface) {
 			$minimumValue = $range->getMinimumValue();
 			if ($minimumValue instanceof DateTime) {
@@ -52,9 +55,12 @@ class Tx_SjrOffers_ViewHelpers_Format_DateRangeViewHelper extends Tx_Fluid_Core_
 				$output = 'ab ' . $minimumValue->format('d.m.Y');
 			} else {
 				if ($minimumValue->format('d.m.Y') === $maximumValue->format('d.m.Y')) {
-					$output = 'am ' . $minimumValue->format('d.m.Y');
+					$output = 'am ';
+					$output .= $minimumValue->format('d.m.Y');
 				} else {
-					$output = $minimumValue->format('d.m.Y') . ' -&nbsp;' . $maximumValue->format('d.m.Y');					
+					$output = $minimumValue->format('d.m.Y');					
+					$output .= '&nbsp;-&nbsp;';					
+					$output .= $maximumValue->format('d.m.Y');					
 				}
 			}
 		} else {

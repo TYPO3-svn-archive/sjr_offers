@@ -15,7 +15,7 @@
 				<label for="dates">Datum der Veranstaltung<br />(z.B. "Mo und Fr, jeweils 8-12 Uhr")</label>
 				<f:form.textarea id="dates" property="dates" rows="5" cols="46" /><br />
 				<label for="startdate">Angebotszeitraum</label>
-				vom&nbsp;<f:form.textbox id="startdate" class="datepicker" property="dateRange.minimumValue" value="{f:format.date(date: '{offer.dateRange.minimumValue}', format: 'd.m.Y')}" size="12" />&nbsp;bis&nbsp;zum&nbsp;<f:form.textbox id="enddate" class="datepicker" property="dateRange.maximumValue" value="{f:format.date(date: '{offer.dateRange.maximumValue}', format: 'd.m.Y')}" size="12" /><br />
+				vom&nbsp;<f:form.textbox id="startdate" class="datepicker" property="dateRange.minimumValue" value="{f:format.date(date: offer.dateRange.minimumValue, format: 'd.m.Y')}" size="12" />&nbsp;bis&nbsp;zum&nbsp;<f:form.textbox id="enddate" class="datepicker" property="dateRange.maximumValue" value="{f:format.date(date: offer.dateRange.maximumValue, format: 'd.m.Y')}" size="12" /><br />
 				<label for="venue">Veranstaltungsort<br />(z.B. "Gemeindehaus, 2. Stock")</label>
 				<f:form.textarea id="venue" property="venue" rows="5" cols="46" /><br />
 				<label for="ageRange">Altersbereich</label>

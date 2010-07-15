@@ -89,7 +89,7 @@
 				<f:for each="{offers}" as="offer">
 					<tr>
 						<td valign="top" width="30%">
-							<sjr:format.dateRange>{offer.dateRange}</sjr:format.dateRange>
+							{offer.dateRange->sjr:format.dateRange()}
 						</td>
 						<td valign="top" width="70%">
 							<f:link.action action="show" controller="Offer" arguments="{offer : offer}"><strong>{offer.title}</strong></f:link.action>
@@ -108,7 +108,7 @@
 							</f:if>
 						</td>
 						<td valign="top">
-							<sjr:format.numericRange>{offer.ageRange}</sjr:format.numericRange>
+							{offer.ageRange->sjr:format.numericRange()}
 						</td>
 						<td valign="top">
 							<f:if condition="{offer.categories}">
