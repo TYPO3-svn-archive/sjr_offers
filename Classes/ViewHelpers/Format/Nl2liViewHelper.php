@@ -23,37 +23,39 @@
 ***************************************************************/
 
 /**
- * View helper for rendering contraints.
+ * Wrapper for PHPs nl2br function.
+ * @see http://www.php.net/manual/en/function.nl2br.php
+ *
+ * = Examples =
+ *
+ * <code title="Example">
+ * <f:format.nl2li>{text_with_linebreaks}</f:format.nl2li>
+ * </code>
+ *
+ * Output:
+ * text with line breaks wrapped by <li> tags
+ *
+ * @version $Id$
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @api
+ * @scope prototype
  */
-class Tx_SjrOffers_ViewHelper_Format_NumericRangeViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_SjrOffers_ViewHelpers_Format_Nl2liViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
-	 * Render the supplied range as formatted string
+	 * Replaces newline characters by HTML line breaks.
 	 *
-	 * @return string Formatted range
+	 * @return string the altered string.
 	 */
 	public function render() {
-		$output = '';
-		$range = $this->renderChildren();
-		if ($range instanceof Tx_SjrOffers_Domain_Model_NumericRangeInterface) {
-			$minimumValue = $range->getMinimumValue();
-			$maximumValue = $range->getMaximumValue();
-			if (empty($minimumValue) && empty($maximumValue)) {
-				$output = '';
-			} elseif (empty($minimumValue) && !empty($maximumValue)) {
-				$output = 'bis&nbsp;' . $maximumValue;
-			} elseif (!empty($minimumValue) && empty($maximumValue)) {
-				$output = 'ab&nbsp;' . $minimumValue;
-			} else {
-				if ($minimumValue === $maximumValue) {
-					$output = $minimumValue;
-				} else {
-					$output = $minimumValue . '&nbsp;-&nbsp;' . $maximumValue;					
-				}
-			}
+		$content = $this->renderChildren();
+		if (!empty($content)) {
+			$content = htmlspecialchars($content);
+			$content = preg_replace('/^(.*)$/m', '<li>$1</li>', $content);
+			$content = '<ul>' . $content . '</ul>';
 		}
-		return $output;
+		return $content;
 	}
-	
 }
+
 ?>

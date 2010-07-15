@@ -30,19 +30,25 @@
  */
 class Tx_SjrOffers_Service_AccessControlService implements t3lib_Singleton {
 
-	public function hasAccess($frontendUser = NULL) {
-		if ($frontendUser instanceof Tx_Extbase_Persistence_LazyLoadingProxy) {
-			$frontendUser->_loadRealInstance();
+	/**
+	 * Tests, if the given person is logged into the frontend
+	 *
+	 * @param string $person The person 
+	 * @return bool The result; TRUE if the given person is logged in; otherwise FALSE
+	 */
+	public function isLoggedIn($person = NULL) {
+		if ($person instanceof Tx_Extbase_Persistence_LazyLoadingProxy) {
+			$person->_loadRealInstance();
 		}
-		if (is_object($frontendUser)) {
-			if ($frontendUser->getUid() === $this->getFrontendUserUid()) {
+		if (is_object($person)) {
+			if ($person->getUid() === $this->getFrontendUserUid()) {
 				return TRUE;
 			}
 		}
 		return FALSE;
 	}	
 		
-	public function hasLoggedInBackendAdmin() {
+	public function backendAdminIsLoggedIn() {
 		return $GLOBALS['TSFE']->beUserLogin === 1 ? TRUE : FALSE;
 	}
 	
@@ -61,16 +67,9 @@ class Tx_SjrOffers_Service_AccessControlService implements t3lib_Singleton {
 		if($this->hasLoggedInFrontendUser() && !empty($GLOBALS['TSFE']->fe_user->user['uid'])) {
 			return intval($GLOBALS['TSFE']->fe_user->user['uid']);
 		}
+		return NULL;
 	}
-	
-	protected function userHasAccessToObject($feUserUid, $object) {
-		if ($object->getAdministrator()->getUid() == $feUserUid) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}
-	}
-		
+			
 }
 
 ?>

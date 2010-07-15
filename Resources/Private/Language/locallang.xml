@@ -6,6 +6,8 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="newOffer.title">Titel des Angebots</label>
+			<label index="newOffer.title.1238108067">Die Länge des Titels muss zwischen 3 und 50 Zeichen liegen.</label>
 			<label index="read_more">read more >></label>
 			<label index="label_recent_posts">Below are the most recent posts:</label>
 			<label index="title">Blogs</label>

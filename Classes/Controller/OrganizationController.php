@@ -74,12 +74,12 @@ class Tx_SjrOffers_Controller_OrganizationController extends Tx_Extbase_MVC_Cont
 	 * @dontvalidate $newContact
 	 */
 	public function showAction(Tx_SjrOffers_Domain_Model_Organization $organization, Tx_SjrOffers_Domain_Model_Person $newContact = NULL) {
-		if ($this->accessControllService->hasLoggedInBackendAdmin() || $this->accessControllService->hasAccess($organization->getAdministrator())) {
+		if ($this->accessControllService->backendAdminIsLoggedIn() || $this->accessControllService->isLoggedIn($organization->getAdministrator())) {
 			$contacts = $organization->getAllContacts();
 			$this->view->assign('offers', $this->offerRepository->findForAdmin($organization));
 		} else {
-			$allowedStates = (is_string($this->settings['allowedStates']) && strlen($this->settings['allowedStates']) > 0) ? t3lib_div::intExplode(',', $this->settings['allowedStates']) : array();
-			$listCategories = (is_string($this->settings['listCategories']) && strlen($this->settings['listCategories']) > 0) ? t3lib_div::intExplode(',', $this->settings['listCategories']) : array();
+			$allowedStates = (strlen($this->settings['allowedStates']) > 0) ? t3lib_div::intExplode(',', $this->settings['allowedStates']) : array();
+			$listCategories = (strlen($this->settings['listCategories']) > 0) ? t3lib_div::intExplode(',', $this->settings['listCategories']) : array();
 			$contacts = $organization->getContacts();
 			$demand = t3lib_div::makeInstance('Tx_SjrOffers_Domain_Model_Demand');
 			$demand->setOrganization($organization);
@@ -104,7 +104,7 @@ class Tx_SjrOffers_Controller_OrganizationController extends Tx_Extbase_MVC_Cont
 	 * @dontvalidate $organization
 	 */
 	public function editAction(Tx_SjrOffers_Domain_Model_Organization $organization) {
-		if ($this->accessControllService->hasLoggedInBackendAdmin() || $this->accessControllService->hasAccess($organization->getAdministrator())) {
+		if ($this->accessControllService->backendAdminIsLoggedIn() || $this->accessControllService->isLoggedIn($organization->getAdministrator())) {
 			$this->view->assign('organization', $organization);
 			$this->view->assign('contacts', $this->personRepository->findAll());
 			$this->response->addAdditionalHeaderData($this->additionalHeaderData);
@@ -120,7 +120,7 @@ class Tx_SjrOffers_Controller_OrganizationController extends Tx_Extbase_MVC_Cont
 	 * @return void
 	 */
 	public function updateAction(Tx_SjrOffers_Domain_Model_Organization $organization) {
-		if ($this->accessControllService->hasLoggedInBackendAdmin() || $this->accessControllService->hasAccess($organization->getAdministrator())) {
+		if ($this->accessControllService->backendAdminIsLoggedIn() || $this->accessControllService->isLoggedIn($organization->getAdministrator())) {
 			$this->organizationRepository->update($organization);
 		} else {
 			$this->flashMessages->add('Sie haben keine Berechtigung die Aktion auszuführen.');
@@ -136,7 +136,7 @@ class Tx_SjrOffers_Controller_OrganizationController extends Tx_Extbase_MVC_Cont
 	 * @return void
 	 */
 	public function createContactAction(Tx_SjrOffers_Domain_Model_Organization $organization, Tx_SjrOffers_Domain_Model_Person $newContact) {
-		if ($this->accessControllService->hasLoggedInBackendAdmin() || $this->accessControllService->hasAccess($organization->getAdministrator())) {
+		if ($this->accessControllService->backendAdminIsLoggedIn() || $this->accessControllService->isLoggedIn($organization->getAdministrator())) {
 			$organization->addContact($newContact);
 		} else {
 			$this->flashMessages->add('Sie haben keine Berechtigung die Aktion auszuführen.');
@@ -153,7 +153,7 @@ class Tx_SjrOffers_Controller_OrganizationController extends Tx_Extbase_MVC_Cont
 	 * @dontvalidatehmac
 	 */
 	public function updateContactAction(Tx_SjrOffers_Domain_Model_Organization $organization, Tx_SjrOffers_Domain_Model_Person $contact) {
-		if ($this->accessControllService->hasLoggedInBackendAdmin() || $this->accessControllService->hasAccess($organization->getAdministrator())) {
+		if ($this->accessControllService->backendAdminIsLoggedIn() || $this->accessControllService->isLoggedIn($organization->getAdministrator())) {
 			$this->personRepository->update($contact);
 		} else {
 			$this->flashMessages->add('Sie haben keine Berechtigung die Aktion auszuführen.');
@@ -170,7 +170,7 @@ class Tx_SjrOffers_Controller_OrganizationController extends Tx_Extbase_MVC_Cont
 	 * @dontvalidate $contact
 	 */
 	public function removeContactAction(Tx_SjrOffers_Domain_Model_Organization $organization, Tx_SjrOffers_Domain_Model_Person $contact) {
-		if ($this->accessControllService->hasLoggedInBackendAdmin() || $this->accessControllService->hasAccess($organization->getAdministrator())) {
+		if ($this->accessControllService->backendAdminIsLoggedIn() || $this->accessControllService->isLoggedIn($organization->getAdministrator())) {
 			$organization->removeContact($contact);
 			$this->personRepository->remove($contact);
 		} else {
@@ -187,7 +187,7 @@ class Tx_SjrOffers_Controller_OrganizationController extends Tx_Extbase_MVC_Cont
 	 * @dontvalidate $offer
 	 */
 	public function removeOfferAction(Tx_SjrOffers_Domain_Model_Offer $offer) {
-		if ($this->accessControllService->hasLoggedInBackendAdmin() || $this->accessControllService->hasAccess($offer->getOrganization()->getAdministrator())) {
+		if ($this->accessControllService->backendAdminIsLoggedIn() || $this->accessControllService->isLoggedIn($offer->getOrganization()->getAdministrator())) {
 			$organization = $offer->getOrganization();
 			$organization->removeOffer($offer);
 		} else {
@@ -202,7 +202,7 @@ class Tx_SjrOffers_Controller_OrganizationController extends Tx_Extbase_MVC_Cont
 	 * @return void
 	 */
 	public function deleteAllAction() {
-		if ($this->accessControllService->hasLoggedInBackendAdmin()) {
+		if ($this->accessControllService->backendAdminIsLoggedIn()) {
 			$organizations = $this->organizationRepository->findAll();
 			foreach ($organizations as $organization) {
 				$this->organizationRepository->remove($organization);

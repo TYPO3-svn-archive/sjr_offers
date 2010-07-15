@@ -25,7 +25,7 @@
 /**
  * View helper for rendering contraints.
  */
-class Tx_SjrOffers_ViewHelper_Format_DateRangeViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_SjrOffers_ViewHelpers_Format_NumericRangeViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
 	 * Render the supplied range as formatted string
@@ -35,30 +35,22 @@ class Tx_SjrOffers_ViewHelper_Format_DateRangeViewHelper extends Tx_Fluid_Core_V
 	public function render() {
 		$output = '';
 		$range = $this->renderChildren();
-		if ($range instanceof Tx_SjrOffers_Domain_Model_DateRangeInterface) {
+		if ($range instanceof Tx_SjrOffers_Domain_Model_NumericRangeInterface) {
 			$minimumValue = $range->getMinimumValue();
-			if ($minimumValue instanceof DateTime) {
-				$plainMinimumValue = $minimumValue->format('U');
-			}
 			$maximumValue = $range->getMaximumValue();
-			if ($maximumValue instanceof DateTime) {
-				$plainMaximumValue = $maximumValue->format('U');
-			}
-			if (empty($plainMinimumValue) && empty($plainMaximumValue)) {
-				$output = 'ganzjährig';
-			} elseif (empty($plainMinimumValue) && !empty($plainMaximumValue)) {
-				$output = 'bis ' . $maximumValue->format('d.m.Y');
-			} elseif (!empty($plainMinimumValue) && empty($plainMaximumValue)) {
-				$output = 'ab ' . $minimumValue->format('d.m.Y');
+			if (empty($minimumValue) && empty($maximumValue)) {
+				$output = '';
+			} elseif (empty($minimumValue) && !empty($maximumValue)) {
+				$output = 'bis&nbsp;' . $maximumValue;
+			} elseif (!empty($minimumValue) && empty($maximumValue)) {
+				$output = 'ab&nbsp;' . $minimumValue;
 			} else {
-				if ($minimumValue->format('d.m.Y') === $maximumValue->format('d.m.Y')) {
-					$output = 'am ' . $minimumValue->format('d.m.Y');
+				if ($minimumValue === $maximumValue) {
+					$output = $minimumValue;
 				} else {
-					$output = $minimumValue->format('d.m.Y') . ' -&nbsp;' . $maximumValue->format('d.m.Y');					
+					$output = $minimumValue . '&nbsp;-&nbsp;' . $maximumValue;					
 				}
 			}
-		} else {
-			$output = 'ganzjährig';
 		}
 		return $output;
 	}

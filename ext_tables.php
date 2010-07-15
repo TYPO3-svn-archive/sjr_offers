@@ -1,9 +1,9 @@
 <?php
 if (!defined ('TYPO3_MODE')) die ('Access denied.');
 
-Tx_Extbase_Utility_Extension::registerPlugin($_EXTKEY, 'list', 'A List of Offers');
-Tx_Extbase_Utility_Extension::registerPlugin($_EXTKEY, 'organizations', 'A List of Organizations');
-Tx_Extbase_Utility_Extension::registerPlugin($_EXTKEY, 'admin', 'FE-Admin Plugin');
+Tx_Extbase_Utility_Extension::registerPlugin($_EXTKEY, 'List', 'A List of Offers');
+Tx_Extbase_Utility_Extension::registerPlugin($_EXTKEY, 'Organizations', 'A List of Organizations');
+Tx_Extbase_Utility_Extension::registerPlugin($_EXTKEY, 'Admin', 'FE-Admin Plugin');
 
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Basic Configuration');
 

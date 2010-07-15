@@ -1,8 +1,8 @@
-{namespace sjr=Tx_SjrOffers_ViewHelper}
+{namespace sjr=Tx_SjrOffers_ViewHelpers}
 <f:section name="content">
-	<sjr:security.ifAccessGranted person="{organization.administrator}">
+	<sjr:security.ifAuthenticated person="{organization.administrator}">
 		<f:then>
-			<f:render partial="formErrors" arguments="{for: 'newOffer'}" />
+			<f:render partial="formErrors" arguments="{formName: 'newOffer'}" />
 			<f:form class="tx-sjroffers-form" method="post" controller="Offer" action="create" name="newOffer" object="{newOffer}" arguments="{organization : organization}">
 				<label for="title">Titel</label>
 				<f:form.textbox id="title" property="title" size="46" /><br />
@@ -41,5 +41,5 @@
 		<f:else>
 			<f:render partial="accessError" />
 		</f:else>
-	</sjr:security.ifAccessGranted>
+	</sjr:security.ifAuthenticated>
 </f:section>

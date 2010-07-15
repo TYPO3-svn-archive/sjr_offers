@@ -3,22 +3,22 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
 Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,
-	'list',
-	array(	 
-		'Offer' => 'index,listOrganizations,show,new,create,edit,update,delete,createContact,setContact,updateContact,removeContact',
-		'Organization' => 'index,show,edit,update,removeOffer,createContact,updateContact,removeContact', 
-		'Person' => 'new,create,edit,update,delete',
-		),
+	'List',
 	array(
-		'Offer' => 'index,new,create,edit,update,delete,createContact,setContact,updateContact,removeContact',
-		'Organization' => 'edit,update,removeOffer,createContact,updateContact,removeContact', 
-		'Person' => 'new,create,edit,update,delete',
-		)
-	);
+		'Offer' => 'index, show, new, create, edit, update, delete, createContact, setContact, updateContact, removeContact',
+		'Organization' => 'index, show, edit, update, removeOffer, createContact, updateContact, removeContact', 
+		'Person' => 'new, create, edit, update, delete'
+	),
+	array(
+		'Offer' => 'new, edit, createContact',
+		'Organization' => 'edit, createContact', 
+		'Person' => 'new, edit'
+	)
+);
 
 Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,
-	'organizations',
+	'Organizations',
 	array(	 
 		'Offer' => 'index,show,new,create,edit,update,delete,createContact,setContact,updateContact,removeContact',
 		'Organization' => 'index,show,edit,update,removeOffer,createContact,updateContact,removeContact', 
@@ -33,7 +33,7 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 
 Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,
-	'admin',
+	'Admin',
 	array(	 
 		'Organization' => 'edit,update,populate,deleteAll', 
 		'Offer' => 'index,show',

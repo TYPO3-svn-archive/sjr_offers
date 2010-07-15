@@ -7,6 +7,14 @@ plugin.tx_sjroffers {
 	}
 	persistence {
 		storagePid = {$plugin.tx_sjroffers.persistence.storagePid}
+		classes {
+			Tx_SjrOffers_Domain_Model_Administrator {
+				mapping {
+					tableName = fe_users
+					recordType = Tx_SjrOffers_Domain_Model_Administrator
+				}
+			}
+		}
 	}
 	view {
 		templateRootPath = {$plugin.tx_sjroffers.view.templateRootPath}

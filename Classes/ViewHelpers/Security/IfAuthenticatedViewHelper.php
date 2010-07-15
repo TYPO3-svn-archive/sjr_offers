@@ -25,7 +25,7 @@
 /**
  * View helper for checking access rights.
  */
-class Tx_SjrOffers_ViewHelper_Security_IfAccessGrantedViewHelper extends Tx_Fluid_ViewHelpers_IfViewHelper {
+class Tx_SjrOffers_ViewHelpers_Security_IfAuthenticatedViewHelper extends Tx_Fluid_ViewHelpers_IfViewHelper {
 
 	/**
 	 * Checks, if the given frontend user has access to the given object
@@ -35,7 +35,7 @@ class Tx_SjrOffers_ViewHelper_Security_IfAccessGrantedViewHelper extends Tx_Flui
 	 */
 	public function render($person = NULL) {
 		$accessControllService = t3lib_div::makeInstance('Tx_SjrOffers_Service_AccessControlService');
-		if ($accessControllService->hasAccess($person) || $accessControllService->hasLoggedInBackendAdmin()) {
+		if ($accessControllService->isLoggedIn($person) || $accessControllService->backendAdminIsLoggedIn()) {
 			return $this->renderThenChild();
 		} else {
 			return $this->renderElseChild();
