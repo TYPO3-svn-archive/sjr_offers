@@ -27,7 +27,7 @@
 				<div id="attendanceFeeContainer">	
 					<f:for each="{offer.attendanceFees}" as="attendanceFee">
 						<div class="singleAttendanceFee">
-							<f:form.textbox name="attendanceFees[amount][]" value="{f:format.number(stringToFormat: attendanceFee.amount, decimalSeparator: ',', thousandsSeparator: '.')}" size="6" />&nbsp;&euro;&nbsp;&nbsp;
+							<f:form.textbox name="attendanceFees[amount][]" value="{attendanceFee.amount->f:format.number(decimalSeparator: ',', thousandsSeparator: '.')}" size="6" />&nbsp;&euro;&nbsp;&nbsp;
 							gültig&nbsp;für&nbsp;<f:form.textbox name="attendanceFees[comment][]" value="{attendanceFee.comment}" size="16" />
 							<button class="removeAttendanceFee">löschen</button><br />
 						</div>

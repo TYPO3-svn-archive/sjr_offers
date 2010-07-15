@@ -46,14 +46,6 @@ class Tx_SjrOffers_Controller_OrganizationController extends Tx_Extbase_MVC_Cont
 		$this->offerRepository = t3lib_div::makeInstance('Tx_SjrOffers_Domain_Repository_OfferRepository');
 		$this->personRepository = t3lib_div::makeInstance('Tx_SjrOffers_Domain_Repository_PersonRepository');
 		$this->categoryRepository = t3lib_div::makeInstance('Tx_SjrOffers_Domain_Repository_CategoryRepository');
-		// FIXME inclusion of jQuery not that elegant:
-		$this->additionalHeaderData = '
-<link type="text/css" href="fileadmin/css/smoothness/jquery-ui-1.7.2.custom.css" rel="Stylesheet" />	
-<script type="text/javascript" src="fileadmin/js/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="fileadmin/js/jquery-ui-1.7.2.custom.min.js"></script>
-<script type="text/javascript" src="fileadmin/js/tx_sjroffers.js"></script>
-';
-
 	}
 
 	/**
@@ -93,7 +85,6 @@ class Tx_SjrOffers_Controller_OrganizationController extends Tx_Extbase_MVC_Cont
 		$this->view->assign('contacts', $contacts);
 		$this->view->assign('organization', $organization);
 		$this->view->assign('newContact', $newContact);
-		$this->response->addAdditionalHeaderData($this->additionalHeaderData);
 	}
 	
 	/**
@@ -107,7 +98,6 @@ class Tx_SjrOffers_Controller_OrganizationController extends Tx_Extbase_MVC_Cont
 		if ($this->accessControllService->backendAdminIsLoggedIn() || $this->accessControllService->isLoggedIn($organization->getAdministrator())) {
 			$this->view->assign('organization', $organization);
 			$this->view->assign('contacts', $this->personRepository->findAll());
-			$this->response->addAdditionalHeaderData($this->additionalHeaderData);
 		} else {
 			$this->flashMessages->add('Sie haben keine Berechtigung die Aktion auszuführen.');
 		}

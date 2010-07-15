@@ -47,13 +47,6 @@ class Tx_SjrOffers_Controller_OfferController extends Tx_Extbase_MVC_Controller_
 		$this->personRepository = t3lib_div::makeInstance('Tx_SjrOffers_Domain_Repository_PersonRepository');
 		$this->categoryRepository = t3lib_div::makeInstance('Tx_SjrOffers_Domain_Repository_CategoryRepository');
 		$this->regionRepository = t3lib_div::makeInstance('Tx_SjrOffers_Domain_Repository_RegionRepository');
-		$this->additionalHeaderData = '
-<link type="text/css" href="fileadmin/css/smoothness/jquery-ui-1.7.2.custom.css" rel="Stylesheet" />	
-<script type="text/javascript" src="fileadmin/js/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="fileadmin/js/jquery-ui-1.7.2.custom.min.js"></script>
-<script type="text/javascript" src="fileadmin/js/ui/i18n/ui.datepicker-de.js"></script>
-<script type="text/javascript" src="fileadmin/js/tx_sjroffers.js"></script>
-';
 	}
 
 	/**
@@ -110,7 +103,6 @@ class Tx_SjrOffers_Controller_OfferController extends Tx_Extbase_MVC_Controller_
 		$this->view->assign('offer', $offer);
 		$this->view->assign('organization', $organization);
 		$this->view->assign('contacts', $organization->getAllContacts());
-		$this->response->addAdditionalHeaderData($this->additionalHeaderData);
 	}
 
 	/**
@@ -128,7 +120,6 @@ class Tx_SjrOffers_Controller_OfferController extends Tx_Extbase_MVC_Controller_
 			$this->view->assign('newOffer', $newOffer);
 			$this->view->assign('regions', $this->regionRepository->findAll());
 			$this->view->assign('contacts', $organization->getAllContacts());
-			$this->response->addAdditionalHeaderData($this->additionalHeaderData);
 		} else {
 			$this->flashMessages->add('Sie haben keine Berechtigung die Aktion auszuführen.');
 		}
@@ -166,7 +157,6 @@ class Tx_SjrOffers_Controller_OfferController extends Tx_Extbase_MVC_Controller_
 		if ($this->accessControllService->backendAdminIsLoggedIn() || $this->accessControllService->isLoggedIn($offer->getOrganization()->getAdministrator())) {
 			$this->view->assign('offer', $offer);
 			$this->view->assign('regions', $this->regionRepository->findAll());
-			$this->response->addAdditionalHeaderData($this->additionalHeaderData);
 		} else {
 			$this->flashMessages->add('Sie haben keine Berechtigung die Aktion auszuführen.');
 		}
